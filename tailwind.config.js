@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       fontFamily: {
         clashDisplay: ['var(--font-clashDisplay)'],
-        gotham: ['var(--font-gotham)']
+        gotham: ['var(--font-gotham)'],
+        sora: ['var(--font-sora)']
       },
       // backgroundImage: {
       //   'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

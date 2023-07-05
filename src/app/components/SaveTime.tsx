@@ -58,7 +58,7 @@ export function SaveTime(){
                             }
                              
                         </div>
-                        <div className="flex flex-row items-center py-6 border border-black px-4 rounded-xl w-6/12">
+                        <div className="flex flex-row items-center py-6 border border-black px-4 rounded-xl md:w-7/12 w-full">
                             <h2 className="font-gotham font-light text-base">Download the App on</h2>
                             <div className="ml-3 py-3 border-l border-black"></div>
                              {

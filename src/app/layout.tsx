@@ -1,5 +1,5 @@
 import './globals.css'
-// import { Inter  } from 'next/font/google'
+import { Sora  } from 'next/font/google'
 import localFont from 'next/font/local'
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -48,6 +48,13 @@ const clashDisplay = localFont({
   variable: "--font-clashDisplay"
 })
 
+const sora = Sora({
+  weight: ["300" , "400" , "500"],
+  variable: '--font-sora',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 export const metadata = {
   title: 'OneGallon',
   description: 'OneGallon App',
@@ -60,7 +67,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${clashDisplay.variable} ${gotham.variable}`}>{children}</body>
+      <body className={`${clashDisplay.variable} ${gotham.variable} ${sora.variable}`}>{children}</body>
     </html>
   )
 }
