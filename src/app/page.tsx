@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { NavBar , Hero , PriceEstimator , AboutUs , SaveTime , HIWSection , FAQ, ContactUs} from './components'
+import { NavBar , Hero , PriceEstimator , AboutUs , SaveTime , HIWSection , FAQ, ContactUs , Footer} from './components'
 
 export default function Home() {
   return (
@@ -12,6 +12,7 @@ export default function Home() {
        <HIWSection />  
        <FAQ />  
        <ContactUs /> 
+       <Footer />
     </main>
   )
 }

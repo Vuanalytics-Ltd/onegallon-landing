@@ -67,7 +67,7 @@ export function ContactUs(){
     }  
 
     return(
-    <div className="bg-[#FF0127] p-4">
+    <div className="bg-[#FF0127] p-4" id="contact">
         <div className="container px-4 mx-auto">
             <div className="flex flex-row flex-wrap py-6 gap-4">
                  <div className="flex flex-col flex-auto w-full lg:w-5/12">
@@ -131,7 +131,7 @@ export function ContactUs(){
                                 </span>
                                 )}
                           </div>
-                          <button  type="submit" className="btn bg-white capitalize font-sora font-semibold text-[#FF0127] w-1/2">
+                          <button  type="submit" className="btn bg-white hover:bg-white capitalize font-sora font-semibold text-[#FF0127] w-1/2">
                              { loadingState && <span className="loading loading-spinner"></span> }
                              Send
                          </button>

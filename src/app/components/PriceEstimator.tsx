@@ -1,6 +1,6 @@
 export function PriceEstimator(){
     return (
-        <div className="bg-white px-2 py-8 w-full min-h-[50vh]">
+        <div className="bg-white px-2 py-8 w-full min-h-[50vh]" id="price">
             <div className="flex flex-col items-center">
                  <div>
                     <h1 className="font-clashDisplay text-center md:text-4xl text-3xl font-medium mb-2">OneGallon price estimator</h1>

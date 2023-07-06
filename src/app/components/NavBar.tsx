@@ -37,7 +37,7 @@ export function NavBar (){
           <div className="flex-1">
             <Link href="/">
               <Image
-                src="/logo.svg"
+                src="/logo.png"
                 alt="OneGallon Logo"
                 width={212}
                 height={37}
