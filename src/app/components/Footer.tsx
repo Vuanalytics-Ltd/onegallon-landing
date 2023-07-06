@@ -79,7 +79,7 @@ export function Footer(){
             </div>
             
             
-            <div className="w-8/12 mx-auto">
+            <div className="lg:w-8/12 w-full mx-auto">
               <span className="footer-title font-sora text-sm font-light opacity-100 normal-case">Be the first to hear our news</span>
               <div className="form-control ">
                 

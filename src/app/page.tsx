@@ -1,5 +1,6 @@
-import Image from 'next/image'
 import { NavBar , Hero , PriceEstimator , AboutUs , SaveTime , HIWSection , FAQ, ContactUs , Footer} from './components'
+import { cachedClient } from "../../sanity/lib/client"
+import { faqQuery } from '../../sanity/lib/queries'
 
 export default function Home() {
   return (
