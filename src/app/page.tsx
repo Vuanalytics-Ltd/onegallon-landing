@@ -2,7 +2,11 @@ import { NavBar , Hero , PriceEstimator , AboutUs , SaveTime , HIWSection , FAQ,
 import { cachedClient } from "../../sanity/lib/client"
 import { faqQuery } from '../../sanity/lib/queries'
 
-export default function Home() {
+export default async function Home() {
+  
+  const faqs = await cachedClient(faqQuery)
+
+
   return (
     <main className="flex min-h-screen flex-col  ">
        <NavBar />
@@ -11,7 +15,7 @@ export default function Home() {
        <AboutUs />
        <SaveTime /> 
        <HIWSection />  
-       <FAQ />  
+       <FAQ data={faqs}/>  
        <ContactUs /> 
        <Footer />
     </main>
