@@ -1,0 +1,152 @@
+"use client"
+import React,{useState , useMemo } from "react"
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { useField } from '@formiz/core'
+import Modal from './Modal'
+import Geocode from "react-geocode";
+
+
+export function DestinationField(props : {name: string , required: string}){
+
+    const [isOpen,setIsOpen] = React.useState(false)
+
+    const { setValue, value } = useField(props)
+
+    const  [marker , setMarker] = React.useState({lat: 5.614818,lng: -0.205874})
+
+
+    const handleOpenModal = () => {
+        setIsOpen(true)
+    }
+  
+    const handleCloseModal = () => {
+        setIsOpen(false)
+    }
+    
+    React.useEffect(() => {
+        if ("geolocation" in navigator) {
+            console.log("Available");
+          } else {
+            console.log("Not Available");
+          }
+    },[])
+    
+    
+    const MapKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string
+    
+    Geocode.setApiKey(MapKey)
+    
+    const getlocation = (lat: number,lng: number) => {
+        
+        Geocode.fromLatLng(lat.toString(),lng.toString()).then(
+            (response) => {
+                const address = response.results[0].formatted_address
+                setValue(address)
+                // console.log(address)
+            },
+            (error) => {
+                console.error(error)
+            }
+        )
+    }
+
+    const handleCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            getlocation(position.coords.latitude,position.coords.longitude)
+        //    console.log(position)
+        },
+        (error) => {
+           console.log(error)
+        }
+        )
+   }
+
+
+    const containerStyle = {
+        width: '100%',
+        height: '500px'
+      };
+    
+    const center = {
+        lat: 5.614818,
+        lng: -0.205874
+    }  
+
+    return (
+      <div>
+        <div className="flex flex-col">
+          <h2 className="font-gotham font-medium text-base mb-3 text-center">
+            Destination
+          </h2>
+
+          <div className="form-control lg:w-5/12  w-10/12 max-w-sm mx-auto">
+            <input
+              type="text"
+              placeholder="Enter destination"
+              value={value ?? ""}
+              onChange={(e) => setValue(e.target.value)}
+              className="input border border-[#737373] w-full max-w-xs mb-5"
+            />
+
+            <div className="mb-4">
+              <a
+                onClick={handleCurrentLocation}
+                className="font-gotham font-medium text-base cursor-pointer mb-1"
+              >
+                Use current location
+              </a>
+              <p className="font-gotham font-light text-sm text-[#898989]">
+                For perfect pickup experience
+              </p>
+            </div>
+
+            <a
+              onClick={handleOpenModal}
+              className="font-gotham font-medium text-base cursor-pointer mb-1"
+            >
+              Set location on map
+            </a>
+          </div>
+        </div>
+        <Modal isOpen={isOpen} onClose={handleCloseModal}>
+          <div className="my-4 p-4 relative">
+            <LoadScript googleMapsApiKey={MapKey}>
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={12}
+                options={{ streetViewControl: false }}
+              >
+                <Marker 
+                   position={marker} 
+                   draggable={true}
+                   onDragEnd={
+                    e => {  
+                        // console.log(e.latLng?.lat())
+                        // console.log(e.latLng?.lng())
+                        setMarker({lat: e.latLng?.lat() as number , lng: e.latLng?.lng() as number})
+                        getlocation(e.latLng?.lat() as number , e.latLng?.lng() as number)
+                    }
+                   }
+                />
+              </GoogleMap>
+            </LoadScript>
+            <div className="w-10/12  p-4 rounded-md bg-white flex flex-row justify-between absolute left-16 bottom-8">
+              <div className="flex flex-1 items-center gap-2">
+                <p className="font-gotham font-medium text-base">
+                  Use current location
+                </p>
+                <p className="font-gotham font-light text-sm text-[#898989]">
+                  For perfect pickup experience
+                </p>
+              </div>
+              <button onClick={() => setIsOpen(false)} className="btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] ">
+                Select
+              </button>
+            </div>
+          </div>
+        </Modal>
+        
+      </div>
+    );
+}

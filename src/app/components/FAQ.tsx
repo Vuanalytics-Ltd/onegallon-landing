@@ -11,7 +11,7 @@ type FaqInput = {
 export function FAQ({data = []}: {data: FaqInput[]}){
    
   
-  console.log("data",data)
+  // console.log("data",data)
 
     return (
       <div className="bg-[#F3F3F3] p-4" id="faqs">
@@ -43,7 +43,7 @@ export function FAQ({data = []}: {data: FaqInput[]}){
                                 <path
                                   d="M1 1L7.17644 7.17644L1.17647 13.1764"
                                   stroke="#7E7E7E"
-                                  stroke-linecap="round"
+                                  strokeLinecap="round"
                                 />
                               </svg>
                             </span>
