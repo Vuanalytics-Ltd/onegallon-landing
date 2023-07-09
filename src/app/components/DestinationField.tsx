@@ -85,7 +85,7 @@ export function DestinationField(props : {name: string , required: string}){
               placeholder="Enter destination"
               value={value ?? ""}
               onChange={(e) => setValue(e.target.value)}
-              className="input border border-[#737373] w-full max-w-xs mb-5"
+              className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
             />
 
             <div className="mb-4">
@@ -109,7 +109,7 @@ export function DestinationField(props : {name: string , required: string}){
           </div>
         </div>
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
-          <div className="my-4 p-4 relative">
+          <div className="my-4 md:p-4 relative">
             <LoadScript googleMapsApiKey={MapKey}>
               <GoogleMap
                 mapContainerStyle={containerStyle}
@@ -131,8 +131,8 @@ export function DestinationField(props : {name: string , required: string}){
                 />
               </GoogleMap>
             </LoadScript>
-            <div className="w-10/12  p-4 rounded-md bg-white flex flex-row justify-between absolute left-16 bottom-8">
-              <div className="flex flex-1 items-center gap-2">
+            <div className="w-full md:w-10/12  p-4 rounded-md bg-white flex flex-row justify-between absolute md:left-16 md:bottom-8">
+              <div className="flex flex-1 flex-wrap items-center gap-2">
                 <p className="font-gotham font-medium text-base">
                   Use current location
                 </p>

@@ -13,7 +13,7 @@ const links = [
     },
     {
         title: "How it works",
-        id: "#works"
+        id: "#hiw"
     },
     {
         title: "FAQs",
@@ -25,7 +25,7 @@ const links = [
 
 function NavLinks({title,id}: {title: string , id: string}){
     return (
-        <a href={id} className="font-clashDisplay font-normal text-sm">{title}</a>
+        <a href={id} className="font-clashDisplay font-normal text-sm hover:bg-transparent md:pl-0 md:pb-1">{title}</a>
     )
 }
 
@@ -49,13 +49,13 @@ export function NavBar (){
             {
                     links.map((link) => {
                         return (
-                            <li key={link.id}> <NavLinks title={link.title}  id={link.id}/> </li>
+                            <li className="hover:after:content-[''] hover:after:w-5 hover:after:border-b  hover:after:border-[#FF0127] " key={link.id}> <NavLinks title={link.title}  id={link.id}/> </li>
                         )
                     })
                 }
             </ul>
             <div className="dropdown dropdown-end md:hidden">
-              <label tabIndex={0} className="btn btn-ghost btn-circle">
+              <label tabIndex={0} className="btn btn-ghost ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -73,7 +73,7 @@ export function NavBar (){
               </label>
               <ul
                 tabIndex={0}
-                className=" menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="bg-white menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52"
               >
                 {
                     links.map((link) => {

@@ -11,11 +11,11 @@ const data = [
 const icons = [
     {
       img: 'apple.svg',
-      link: '/'
+      link: 'https://apps.apple.com/us/app/1gallon-request-for-fuel/id6444171778'
     },
     {
      img: 'android.svg',
-     link: '/'
+     link: 'https://play.google.com/store/apps/details?id=com.gh.onegallon.customer'
    }
  
  ]
@@ -64,7 +64,7 @@ export function SaveTime(){
                              {
                                   icons.map((item,index) => {
                                      return (
-                                        <Link key={"onegallon__icon__" + index} className="normal-case mx-3" href="/">
+                                        <Link key={"onegallon__icon__" + index} className="normal-case mx-3" href={item.link} target="_blank">
                                          <Image
                                               src={item.img}
                                               width={25}

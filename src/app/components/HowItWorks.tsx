@@ -120,7 +120,7 @@ export function HIWSection(){
                       </clipPath>
                     </defs>
                   </svg>
-                  Call Vendors
+                  Call to request
                 </button>
                 <p className="font-gotham font-bold md:text-3xl text-2xl mt-3">+233 (0) 242439874</p>
               </div>

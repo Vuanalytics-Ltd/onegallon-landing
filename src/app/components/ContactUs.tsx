@@ -81,7 +81,7 @@ export function ContactUs(){
                  <div className="flex flex-col  flex-auto w-full lg:w-5/12">
                       <form onSubmit={handleSubmit(onSubmit)} className="xl:mx-auto xl:w-1/2">
                           <div className='mb-4'>
-                            <input type="text" placeholder="Name*" className="input border border-white w-full max-w-sm mb-2" 
+                            <input type="text" placeholder="Name*" className="input border border-white bg-transparent placeholder:text-white text-white w-full max-w-sm mb-2" 
                             {...register("name", { required: true, minLength: 2 })} />
                             {errors.name?.type === "required" && (
                                     <span
@@ -93,7 +93,7 @@ export function ContactUs(){
                                     )}
                           </div>
                           <div className="mb-4">
-                             <input type="email" placeholder="Email*" className="input border border-white w-full max-w-sm mb-2" 
+                             <input type="email" placeholder="Email*" className="bg-transparent placeholder:text-white text-white input border border-white w-full max-w-sm mb-2" 
                              {...register("email", { required: "Email Address is required" })}
                              />
                              {errors.email && (
@@ -106,7 +106,7 @@ export function ContactUs(){
                                 )}
                           </div>
                           <div className="mb-4">
-                            <input type="text" placeholder="Phone*" className="input border border-white w-full max-w-sm mb-2" 
+                            <input type="text" placeholder="Phone*" className="bg-transparent placeholder:text-white text-white input border border-white w-full max-w-sm mb-2" 
                                 {...register("phone", { required: true })}
                             />
                                   {errors.phone?.type === "required" && (
@@ -119,7 +119,7 @@ export function ContactUs(){
                                     )}
                           </div>
                           <div className='mb-4'>
-                             <textarea className="textarea border border-white w-full max-w-sm mb-2" placeholder="Message"
+                             <textarea className="bg-transparent placeholder:text-white text-white textarea border border-white w-full max-w-sm mb-2" placeholder="Message"
                                {...register("message", { required: true, minLength: 2 })}
                              ></textarea>
                                  {errors.message?.type === "required" && (
@@ -131,7 +131,7 @@ export function ContactUs(){
                                 </span>
                                 )}
                           </div>
-                          <button  type="submit" className="btn bg-white hover:bg-white capitalize font-sora font-semibold text-[#FF0127] w-1/2">
+                          <button  type="submit" className=" btn bg-white hover:bg-white capitalize font-sora font-semibold text-[#FF0127] w-1/2">
                              { loadingState && <span className="loading loading-spinner"></span> }
                              Send
                          </button>

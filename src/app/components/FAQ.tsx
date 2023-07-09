@@ -1,14 +1,33 @@
 "use client"
 import react, {useState} from 'react'
 import { PortableText } from "@portabletext/react";
+import {PortableTextBlock} from '@portabletext/types'
+
 
 type FaqInput = {
     _id: string,
     question: string,
-    answer: {}[]
+    answer: PortableTextBlock,
+    _type: string
+}[]
+
+
+
+const portableComponents = {
+   list: {
+    bullet: ({children}: any) => <ul className="ml-8 mt-3">{children}</ul>,
+   },
+   listItem: {
+      bullet: ({children}: any) => <li className='list-disc mb-3'>{children}</li>,
+   },
+   block: {
+      p: ({children}: any) => <p >{children}</p>,
+
+   }
+
 }
 
-export function FAQ({data = []}: {data: FaqInput[]}){
+export function FAQ({data = [] } : {data: FaqInput} ){
    
   
   // console.log("data",data)
@@ -49,28 +68,11 @@ export function FAQ({data = []}: {data: FaqInput[]}){
                             </span>
                           </summary>
                           <div className="group-open:animate-fadeIn mt-3 font-gotham text-base font-light">
-                              {/* {item?.answer ? 
-                              <PortableText value={item.answer}
-                                            serializers={{
-                                              h1: (props: any) => (
-                                                <h1 className="my-5" {...props} />
-                                              ),
-                                              h2: (props: any) => (
-                                                <h2 className="my-5 " {...props} />
-                                              ),
-                                              li: ({ children }: any) => (
-                                                <li className="ml-4 list-disc"> {children}</li>
-                                              ),
-                                              p: (props: any) => (
-                                                <p className="my-5 " {...props} />
-                                              ),
-                                              link: ({ href, children }: any) => (
-                                                <a href={href} className="text-blue-500 hover:underline">
-                                                  {children}
-                                                </a>
-                                              ),
-                                            }}
-                              > </PortableText> : null } */}
+                              {item?.answer ? 
+                              <PortableText 
+                                 value={item.answer}
+                                 components={portableComponents}           
+                              />  : null }
                           </div>
                         </details>
                         

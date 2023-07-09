@@ -17,6 +17,10 @@
   }
 }
 
+html{
+  scroll-behavior: smooth !important;
+}
+
 body {
   /* color: rgb(var(--foreground-rgb)); */
   color: #000000;
@@ -25,4 +29,12 @@ body {
 
 .menu :where(li:not(.menu-title):not(:empty)) > :where(*:not(ul):focus), .menu :where(li:not(.menu-title):not(:empty)) > :where(*:not(ul):hover){
   background-color: unset;
+}
+
+.btn {
+  border-color: transparent;
+}
+
+details summary::-webkit-details-marker {
+  display:none;
 }
