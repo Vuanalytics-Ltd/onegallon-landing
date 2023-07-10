@@ -34,7 +34,7 @@ export function ContactUs(){
       const onSubmit: SubmitHandler<Inputs> = async (data) => {
         setLoadingState(true)
          
-        console.log("data", data)
+        // console.log("data", data)
 
         const contact = [data?.name , data?.email , data?.phone ,  data?.message ]
         
@@ -119,7 +119,7 @@ export function ContactUs(){
                                     )}
                           </div>
                           <div className='mb-4'>
-                             <textarea className="bg-transparent placeholder:text-white text-white textarea border border-white w-full max-w-sm mb-2" placeholder="Message"
+                             <textarea className="bg-transparent placeholder:text-white text-white textarea border border-white w-full max-w-sm mb-2" placeholder="Message*"
                                {...register("message", { required: true, minLength: 2 })}
                              ></textarea>
                                  {errors.message?.type === "required" && (

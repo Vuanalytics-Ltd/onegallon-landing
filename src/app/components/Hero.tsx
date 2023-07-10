@@ -21,7 +21,7 @@ export function Hero(){
     return (
       <div className="hero min-h-screen bg-no-repeat place-items-start bg-[#D7D7D7] bg-[url('/hero.svg')]" >
         <div className="hero-content flex-col min-h-screen ">
-          <div className="max-w-xl px-3">
+          <div className="max-w-xl px-3 md:mt-0 mt-24">
             <h1 className="md:text-5xl text-3xl font-clashDisplay font-semibold md:text-white">We give you the time </h1>
             <h1 className="md:text-5xl text-3xl font-clashDisplay font-semibold md:text-white">to do the things that matter</h1>
             <p className="font-gotham font-light md:text-white text-lg py-6">Fuel delivery and time-saving</p>

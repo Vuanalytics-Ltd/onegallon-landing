@@ -84,7 +84,7 @@ export function HIWSection(){
                 })}
               </ul>
               <div className="flex flex-col mt-16">
-                <button className="btn  bg-[#FF0127] font-clashDisplay font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-80">
+                <a href="tel:+233242439874" className="btn  bg-[#FF0127] font-clashDisplay font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-80">
                   <svg
                     width="30"
                     height="27"
@@ -121,7 +121,7 @@ export function HIWSection(){
                     </defs>
                   </svg>
                   Call to request
-                </button>
+                </a>
                 <p className="font-gotham font-bold md:text-3xl text-2xl mt-3">+233 (0) 242439874</p>
               </div>
             </div>

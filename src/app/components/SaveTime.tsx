@@ -4,7 +4,7 @@ import Link from "next/link"
 const data = [
     'Save time and beat the queues',
     '24/7 petrol and diesel delivery',
-    'Same price as the petrol station, and no delivery fees',
+    'Same price as the petrol station, pay for only the delivery fee',
     'Contactless – order and pay on the app'
 ]
 
