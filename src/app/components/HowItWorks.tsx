@@ -122,7 +122,7 @@ export function HIWSection(){
                   </svg>
                   Call to place order
                 </a>
-                <p className="font-gotham font-bold md:text-3xl text-2xl mt-3  sm:text-start  text-center">+233 (0) 242439874</p>
+                <a href="tel:+233242439874" className="cursor-pointer font-gotham font-bold md:text-3xl text-2xl mt-3  sm:text-start  text-center">+233 (0) 242439874</a>
               </div>
             </div>
             <div className="flex-auto w-full lg:w-5/12">

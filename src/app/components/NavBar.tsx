@@ -33,8 +33,8 @@ function NavLinks({title,id}: {title: string , id: string}){
 export function NavBar (){
     return (
       <div className=" bg-[#F0EFEF] p-3">
-        <div className="navbar container px-2">
-          <div className="flex-1">
+        <div className="navbar container px-2 justify-between mx-auto">
+          <div className="">
             <Link href="/">
               <Image
                 src="/logo.svg"
@@ -44,7 +44,7 @@ export function NavBar (){
               />
             </Link>
           </div>
-          <div className="flex-none">
+          <div className="">
             <ul className="menu menu-horizontal px-1 md:flex hidden">
               {links.map((link) => {
                 return (

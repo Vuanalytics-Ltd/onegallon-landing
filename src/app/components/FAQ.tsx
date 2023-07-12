@@ -68,7 +68,7 @@ export function FAQ({data = [] } : {data: FaqInput} ){
                             </span>
                           </summary>
                           <div className="group-open:animate-fadeIn mt-3 font-gotham text-base font-light">
-                              <div className='md:ml-12 ml-8'>
+                              <div className='ml-5'>
                               {item?.answer ? 
                               <PortableText 
                                  value={item.answer}

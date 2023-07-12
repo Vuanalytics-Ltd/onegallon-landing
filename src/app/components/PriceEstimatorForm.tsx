@@ -29,7 +29,7 @@ export function PriceEstimatorForm(){
             <FormizStep name="step1" >
                  <DestinationField 
                     name="destination"
-                    required="A location is required"
+                    required="Pleas enter your location"
                     
                  />
             </FormizStep>

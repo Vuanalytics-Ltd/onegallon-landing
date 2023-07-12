@@ -149,11 +149,11 @@ export function DestinationField(props : {name: string , required: string }){
             </LoadScript>
             <div className="w-full md:w-10/12  p-4 rounded-md bg-white flex flex-row justify-between absolute md:left-16 md:bottom-8">
               <div className="flex flex-1 flex-wrap items-center gap-2">
-                <p className="font-gotham font-medium text-base">
+                {/* <p className="font-gotham font-medium text-base">
                   Use current location
-                </p>
-                <p className="font-gotham font-light text-sm text-[#898989]">
-                  For perfect pickup experience
+                </p> */}
+                <p className="font-gotham font-medium text-sm text-[#898989]">
+                  Please drag pin to select location
                 </p>
               </div>
               <button onClick={() => setIsOpen(false)} className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] ">
