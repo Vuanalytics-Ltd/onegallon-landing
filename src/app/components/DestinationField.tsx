@@ -1,16 +1,21 @@
 "use client"
-import React,{useState , useMemo } from "react"
+import React,{useState  } from "react"
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
 import Geocode from "react-geocode";
 
 
-export function DestinationField(props : {name: string , required: string}){
+
+export function DestinationField(props : {name: string , required: string }){
 
     const [isOpen,setIsOpen] = React.useState(false)
 
-    const { setValue, value } = useField(props)
+    const { setValue, value , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
+    
+    const [isFocused,setIsFocused] = useState(false)
+
+    const showError = !isValid && !isFocused && (!isPristine || isSubmitted)
 
     const  [marker , setMarker] = React.useState({lat: 5.614818,lng: -0.205874})
 
@@ -22,6 +27,8 @@ export function DestinationField(props : {name: string , required: string}){
     const handleCloseModal = () => {
         setIsOpen(false)
     }
+
+   
     
     React.useEffect(() => {
         if ("geolocation" in navigator) {
@@ -82,11 +89,19 @@ export function DestinationField(props : {name: string , required: string}){
           <div className="form-control lg:w-5/12  w-10/12 max-w-sm mx-auto">
             <input
               type="text"
+              key={resetKey}
               placeholder="Enter destination"
               value={value ?? ""}
               onChange={(e) => setValue(e.target.value)}
               className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
+              // onFocus={() => setIsFocused(true)}
+              // onBlur={() => setIsFocused(false)}
             />
+            {
+              showError && (
+                <p className="font-gotham font-medium text-sm text-red-500">{errorMessage}</p>
+              )
+            }
 
             <div className="mb-4">
               <a
@@ -141,7 +156,7 @@ export function DestinationField(props : {name: string , required: string}){
                   For perfect pickup experience
                 </p>
               </div>
-              <button onClick={() => setIsOpen(false)} className="btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] ">
+              <button onClick={() => setIsOpen(false)} className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] ">
                 Select
               </button>
             </div>

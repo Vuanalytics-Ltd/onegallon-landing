@@ -31,7 +31,9 @@ body {
   background-color: unset;
 }
 
-.btn {
+
+.hiw_btn:hover,
+.m-btn-fix {
   border-color: transparent;
 }
 

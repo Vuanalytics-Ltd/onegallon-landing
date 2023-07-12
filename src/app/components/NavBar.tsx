@@ -33,11 +33,11 @@ function NavLinks({title,id}: {title: string , id: string}){
 export function NavBar (){
     return (
       <div className=" bg-[#F0EFEF] p-3">
-        <div className="navbar ">
+        <div className="navbar container px-2">
           <div className="flex-1">
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="OneGallon Logo"
                 width={212}
                 height={37}
@@ -46,17 +46,33 @@ export function NavBar (){
           </div>
           <div className="flex-none">
             <ul className="menu menu-horizontal px-1 md:flex hidden">
-            {
-                    links.map((link) => {
-                        return (
-                            <li className="hover:after:content-[''] hover:after:w-5 hover:after:border-b  hover:after:border-[#FF0127] " key={link.id}> <NavLinks title={link.title}  id={link.id}/> </li>
-                        )
-                    })
-                }
+              {links.map((link) => {
+                return (
+                  <li
+                    className="hover:after:content-[''] hover:after:w-5 hover:after:border-b  hover:after:border-[#FF0127] "
+                    key={link.id}
+                  >
+                    {" "}
+                    <NavLinks title={link.title} id={link.id} />{" "}
+                  </li>
+                );
+              })}
             </ul>
             <div className="dropdown dropdown-end md:hidden">
               <label tabIndex={0} className="btn btn-ghost ">
                 <svg
+                  width="30"
+                  height="18"
+                  viewBox="0 0 30 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 1H30" stroke="black" strokeWidth="2" />
+                  <path d="M0 9H30" stroke="black" strokeWidth="2" />
+                  <path d="M0 17H30" stroke="black" strokeWidth="2" />
+                </svg>
+
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
                   fill="none"
@@ -69,20 +85,20 @@ export function NavBar (){
                     strokeWidth="2"
                     d="M4 6h16M4 12h16M4 18h7"
                   />
-                </svg>
+                </svg> */}
               </label>
               <ul
                 tabIndex={0}
                 className="bg-white menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52"
               >
-                {
-                    links.map((link) => {
-                        return (
-                            <li key={link.id}> <NavLinks title={link.title}  id={link.id}/> </li>
-                        )
-                    })
-                }
-               
+                {links.map((link) => {
+                  return (
+                    <li key={link.id}>
+                      {" "}
+                      <NavLinks title={link.title} id={link.id} />{" "}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>

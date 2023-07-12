@@ -1,3 +1,8 @@
+"use client"
+import React, { useEffect } from 'react'
+import { useForm , SubmitHandler } from 'react-hook-form'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Link from "next/link"
 import Image from "next/image"
 
@@ -38,14 +43,70 @@ const secondlist = [
 
 ]
 
+type Inputs = {
+  email: string,
+}
+
 export function Footer(){
+
+  const {register,handleSubmit,formState,formState: {errors , isSubmitSuccessful},reset} = useForm<Inputs>()
+    
+  const [loadingState,setLoadingState] = React.useState(false)
+
+  const notify = () => toast('Thanks for joining our mailing list.')
+
+  useEffect(() => {
+    if(formState.isSubmitSuccessful)
+     {
+        reset({
+            email: '',
+        })
+     }
+    
+  }, [formState,reset])
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoadingState(true)
+     
+    // console.log("data", data)
+
+    const contact = [data?.email]
+    
+    const sheetData = {
+        range: 'Mailing List',
+        data: contact
+    }
+    
+    const response = await fetch('/api/sheet' , {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sheetData)
+    })
+
+    const content = await response.json()
+
+    
+    if(content?.status === 200){
+        notify()
+        setLoadingState(false)
+    } else {
+        setLoadingState(true)
+    }
+
+    
+    
+}  
+
     return (
-      <div className="bg-[#F3F3F3] p-4 min-h-[50vh]">
+      <div className="bg-[#F3F3F3] p-4 py-12">
         <div className="container px-4 mx-auto">
           <div className="flex flex-row my-6">
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="OneGallon Logo"
                 width={212}
                 height={37}
@@ -59,7 +120,7 @@ export function Footer(){
                   <a
                     key={list.id}
                     href={list.id}
-                    className="font-sora font-light text-base mb-4"
+                    className="font-sora font-light text-base mb-4 "
                   >
                     {list.title}
                   </a>
@@ -84,19 +145,38 @@ export function Footer(){
               <span className="footer-title font-sora text-sm font-light opacity-100 normal-case">
                 Be the first to hear our news
               </span>
-              <div className="form-control ">
+              <form onSubmit={handleSubmit(onSubmit)} className="form-control ">
                 <div className="flex flex-row flex-wrap gap-2">
                   <input
                     type="text"
                     placeholder="Email Address"
                     className="input border border-black w-80 pr-16 bg-transparent"
+                    {...register("email", { 
+                      required: "Email Address is required",
+                      validate: {
+                        // maxLength: (v) =>
+                        //   v.length <= 50 || "The email should have at most 50 characters",
+                        matchPattern: (v) =>
+                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                          "Email address must be a valid address",
+                      },
+                    })}
                   />
-                  <button className="w-full   md:w-24  btn  font-sora font-semibold bg-[#FF0127] text-white normal-case hover:bg-[#FF0127]  rounded-lg">
+                  
+                  <button className="m-btn-fix  w-full   md:w-24  btn  font-sora font-semibold bg-[#FF0127] text-white normal-case hover:bg-[#FF0127]  rounded-lg">
+                  { loadingState && <span className="loading loading-spinner loading-xs"></span> }
                     Send
                   </button>
                 </div>
-              </div>
-              
+              </form>
+              {errors.email && (
+                      <span
+                        role="alert"
+                        className="mt-1 font-sora text-xs font-bold text-red-500">
+                        {errors.email?.message}
+                      </span>
+                  )}
+              <ToastContainer />
             </div>
           </footer>
           <div className="flex flex-row flex-wrap mt-12">

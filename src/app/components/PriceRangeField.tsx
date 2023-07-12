@@ -3,10 +3,15 @@ import React,{useState} from "react"
 import { useField } from '@formiz/core'
 
 export function PriceRangeField(props: {name: string , required: string}){
-    const { setValue, value } = useField(props)
-    const [checkedValue,setCheckedValue] = useState('')
+  const { setValue, value , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
+    
+  const [isFocused,setIsFocused] = useState(false)
+
+  const showError = !isValid && !isFocused && (!isPristine || isSubmitted)
+
+  const [checkedValue,setCheckedValue] = useState('')
    
-    const handleChange = (e: { target: { value: React.SetStateAction<string> , checked: boolean} }) => {
+  const handleChange = (e: { target: { value: React.SetStateAction<string> , checked: boolean} }) => {
         if (e.target.checked){
             setCheckedValue(e.target.value)
             //setValue(checkedValue)
@@ -37,7 +42,7 @@ export function PriceRangeField(props: {name: string , required: string}){
           <h2 className="font-gotham font-medium text-base mb-3 text-center">
             Price Range for Service plan
           </h2>
-          <div className="form-control lg:w-5/12  w-10/12 max-w-sm mx-auto">
+          <div className="form-control  mx-auto">
             {
                 data.map((item) => {
                        return (
@@ -73,10 +78,18 @@ export function PriceRangeField(props: {name: string , required: string}){
                              //onChange={handleChange}
                              onChange={ (e) => { handleChange(e) , setValue(e.target.value)} }
                              value={item.key}
+                             onFocus={() => setIsFocused(true)}
+                             onBlur={() => setIsFocused(false)}
+                             key={resetKey}
                            />
                          </label>
                        );
                 })
+            }
+            {
+              showError && (
+                <p className="font-gotham font-medium text-sm text-red-500">{errorMessage}</p>
+              )
             }
           
            

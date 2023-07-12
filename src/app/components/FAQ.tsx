@@ -34,7 +34,7 @@ export function FAQ({data = [] } : {data: FaqInput} ){
 
     return (
       <div className="bg-[#F3F3F3] p-4" id="faqs">
-        <div className="container mx-auto px-4">
+        <div className="py-12 container mx-auto px-4">
           <h1 className="pt-6 pb-2 font-clashDisplay font-medium md:text-4xl text-3xl">
             FAQs
           </h1>
@@ -68,11 +68,14 @@ export function FAQ({data = [] } : {data: FaqInput} ){
                             </span>
                           </summary>
                           <div className="group-open:animate-fadeIn mt-3 font-gotham text-base font-light">
+                              <div className='md:ml-12 ml-8'>
                               {item?.answer ? 
                               <PortableText 
                                  value={item.answer}
                                  components={portableComponents}           
-                              />  : null }
+                              />  : null }         
+                              </div>
+                              
                           </div>
                         </details>
                         

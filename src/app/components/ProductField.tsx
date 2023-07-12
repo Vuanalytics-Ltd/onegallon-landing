@@ -3,8 +3,13 @@ import React,{useState} from "react"
 import { useField } from '@formiz/core'
 
 export function ProductField(props: {name: string , required: string}){
-    const { setValue, value } = useField(props)
-    const [checkedValue,setCheckedValue] = useState('')
+  const { setValue, value , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
+    
+  const [isFocused,setIsFocused] = useState(false)
+
+  const showError = !isValid && !isFocused && (!isPristine || isSubmitted)
+  
+  const [checkedValue,setCheckedValue] = useState('')
    
     const handleChange = (e: { target: { value: React.SetStateAction<string> , checked: boolean} }) => {
         if (e.target.checked){
@@ -33,10 +38,12 @@ export function ProductField(props: {name: string , required: string}){
               className="radio "
               checked={checkedValue === 'petrol'}
               hidden
-            //   onChange={handleChange}
               onChange={ (e) => { handleChange(e) , setValue(e.target.value)} }
 
               value="petrol"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              key={resetKey}
             />
           </label>
           <label htmlFor="diesel" className={`label cursor-pointer border border-[#737373] rounded-lg mb-10 ${checkedValue === 'diesel' ? 'bg-black' : ''}`}>
@@ -50,11 +57,17 @@ export function ProductField(props: {name: string , required: string}){
               
               hidden
               value="diesel"  
-            //   onChange={[(e) => handleChange(e) , (e) => setValue(e.target.value)]}
              onChange={ (e) => { handleChange(e) , setValue(e.target.value)} }
+             onFocus={() => setIsFocused(true)}
+             onBlur={() => setIsFocused(false)}
+             key={resetKey}
             />
           </label>
-          
+          {
+              showError && (
+                <p className="font-gotham font-medium text-sm text-red-500">{errorMessage}</p>
+              )
+            }
         </div>
         {/* <input
           value={value ?? ""} // Pass the value for the input

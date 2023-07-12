@@ -67,7 +67,7 @@ export function ContactUs(){
     }  
 
     return(
-    <div className="bg-[#FF0127] p-4" id="contact">
+    <div className="bg-[#FF0127] py-12 p-4" id="contact">
         <div className="container px-4 mx-auto">
             <div className="flex flex-row flex-wrap py-6 gap-4">
                  <div className="flex flex-col flex-auto w-full lg:w-5/12">
@@ -94,7 +94,14 @@ export function ContactUs(){
                           </div>
                           <div className="mb-4">
                              <input type="email" placeholder="Email*" className="bg-transparent placeholder:text-white text-white input border border-white w-full max-w-sm mb-2" 
-                             {...register("email", { required: "Email Address is required" })}
+                             {...register("email", { 
+                                required: "Email Address is required" ,
+                                validate: {
+                                    matchPattern: (v) =>
+                                      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                                      "Email address must be a valid address",
+                                  }, 
+                            })}
                              />
                              {errors.email && (
                                 <span
@@ -131,7 +138,7 @@ export function ContactUs(){
                                 </span>
                                 )}
                           </div>
-                          <button  type="submit" className=" btn bg-white hover:bg-white capitalize font-sora font-semibold text-[#FF0127] w-1/2">
+                          <button  type="submit" className="m-btn-fix  btn bg-white hover:bg-white capitalize font-sora font-semibold text-[#FF0127] w-1/2">
                              { loadingState && <span className="loading loading-spinner"></span> }
                              Send
                          </button>

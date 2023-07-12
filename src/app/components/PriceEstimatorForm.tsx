@@ -9,11 +9,18 @@ export function PriceEstimatorForm(){
     const [summary , setSummary] = React.useState({})
     
     const handleSubmit = (values : object) => {
-        console.log("values",values)
+        // console.log("values",values)
         setSummary(values)
         Form.goToStep("step4")
     
     }
+
+    const handleSteps = (step: string) => {
+      //console.log("!Form.isStepValid" , "Going to " + step +  " " + Form.isStepValid   )
+      //console.log("Form.isStepSubmitted" ,  "Going to " + step +  " " + Form.isStepSubmitted   )
+     ( Form.isStepValid && Form.isStepSubmitted ) ? Form.goToStep(step) : null
+    }
+
 
     return (
       <div className="w-full md:w-1/2">
@@ -23,6 +30,7 @@ export function PriceEstimatorForm(){
                  <DestinationField 
                     name="destination"
                     required="A location is required"
+                    
                  />
             </FormizStep>
             <FormizStep name="step2">
@@ -41,17 +49,26 @@ export function PriceEstimatorForm(){
              <div className="flex flex-wrap flex-row my-5 lg:w-5/12 w-10/12 max-w-sm mx-auto mb-5">
                 {
                     Form.currentStep?.index === 0 && (
-                        <button onClick={() => Form.goToStep("step2")}  className="btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Confirm</button>
+                        <button 
+                            onClick={() => handleSteps("step2")}  
+                            className="btn m-btn-fix  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full"
+                            disabled={!Form.isStepValid && Form.isStepSubmitted}
+                            >
+                              Confirm
+                            </button>
                     )
                 }
                 {
                     Form.currentStep?.index === 1 && (
-                        <button onClick={() => Form.goToStep("step3")}  className="btn bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Select</button>
+                        <button 
+                           onClick={() => handleSteps("step3") }
+                           disabled={!Form.isStepValid && Form.isStepSubmitted}  
+                           className="m-btn-fix btn bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Select</button>
                         )
                 }
                 {
                     Form.currentStep?.index === 2 && (
-                        <button type="submit"   className="btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Request now</button>
+                        <button type="submit"   className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Request now</button>
                         )
                 }
                 
@@ -70,7 +87,7 @@ export function PriceEstimatorForm(){
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
                               className="cursor-pointer"
-                              onClick={() => Form.goToStep(item)}
+                              onClick={() => handleSteps(item)}
                             >
                               <circle cx="5" cy="5" r="4.5" stroke="#4F4F4F" fill={Form.currentStep?.index === index ? "black" : ""} />
                             </svg>

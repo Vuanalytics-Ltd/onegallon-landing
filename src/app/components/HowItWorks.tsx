@@ -33,10 +33,10 @@ const lists = [
 
 export function HIWSection(){
     return (
-      <div className="bg-white p-4 w-full min-h-screen" id="hiw">
+      <div className="bg-white p-4 w-full min-h-screen py-12" id="hiw">
         <div className="container px-4 mx-auto">
           <h1 className="font-clashDisplay md:text-4xl text-3xl font-medium py-10 mb-3">
-            It&apos;s as easy
+            It&apos;s easy
           </h1>
 
           <div className="flex flex-row flex-wrap gap-3 mb-10">
@@ -84,7 +84,7 @@ export function HIWSection(){
                 })}
               </ul>
               <div className="flex flex-col mt-16">
-                <a href="tel:+233242439874" className="btn  bg-[#FF0127] font-clashDisplay font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-80">
+                <a href="tel:+233242439874" className="m-btn-fix btn hiw_btn bg-[#FF0127] font-clashDisplay font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-80">
                   <svg
                     width="30"
                     height="27"
@@ -120,9 +120,9 @@ export function HIWSection(){
                       </clipPath>
                     </defs>
                   </svg>
-                  Call to request
+                  Call to place order
                 </a>
-                <p className="font-gotham font-bold md:text-3xl text-2xl mt-3">+233 (0) 242439874</p>
+                <p className="font-gotham font-bold md:text-3xl text-2xl mt-3  sm:text-start  text-center">+233 (0) 242439874</p>
               </div>
             </div>
             <div className="flex-auto w-full lg:w-5/12">
