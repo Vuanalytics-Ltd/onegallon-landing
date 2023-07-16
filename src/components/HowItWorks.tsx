@@ -8,18 +8,18 @@ const data = [
     },
     {
         img: 'book.svg',
-        title: 'Book and checkout',
-        description: 'Open the app, anytime.Order and pay for fuel delivery'
+        title: 'Book',
+        description: 'Open the app and select fuel and delivery point'
     },
     {
         img: 'delivery.svg',
-        title: 'Get your car ready',
-        description: 'Make sure your car is easily accessible (and don\'t forget to open your fuel cap if you\'ve ordered a fuel delvery).'
+        title: 'Pay',
+        description: 'Enter and select your fuel type,enter quantity and make payment'
     },
     {
         img: 'all_set.svg',
         title: 'You\'re all set',
-        description: 'And we\'re on our way. No queues, no hassle. Simpler. Smarter.'
+        description: 'Your OneGallon rider is on its way.No queues, no hassle. Simpler. Smarter.'
     },
 ]
 
@@ -36,7 +36,7 @@ export function HIWSection(){
       <div className="bg-white p-4 w-full min-h-screen py-12" id="hiw">
         <div className="container px-4 mx-auto">
           <h1 className="font-clashDisplay md:text-4xl text-3xl font-medium py-10 mb-3">
-            It&apos;s easy
+            It&apos;s easy as ABC
           </h1>
 
           <div className="flex flex-row flex-wrap gap-3 mb-10">

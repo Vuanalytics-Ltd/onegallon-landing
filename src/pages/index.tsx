@@ -1,8 +1,9 @@
-import './globals.css'
+import { AboutUs, ContactUs, FAQ, Footer, HIWSection, Hero, NavBar, PriceEstimator, SaveTime } from '@/components'
 import { Sora  } from 'next/font/google'
 import localFont from 'next/font/local'
-
-// const inter = Inter({ subsets: ['latin'] })
+import { faqQuery } from '../../sanity/lib/queries'
+import { client } from '../../sanity/lib/client'
+import Head from 'next/head'
 
 const gotham = localFont({
   src: [
@@ -55,19 +56,39 @@ const sora = Sora({
   display: 'swap',
 })
 
-export const metadata = {
-  title: 'OneGallon',
-  description: 'OneGallon App',
-}
+export const getStaticProps = async () => {
+  const data = await client.fetch(faqQuery);
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+  return { props: { data } };
+};
+
+
+export default  function Home({ data }: any) {
+  // const faqs = await cachedClient(faqQuery)
+
+  // console.log("faqs" , data)
+
   return (
-    <html lang="en">
-      <body className={`${clashDisplay.variable} ${gotham.variable} ${sora.variable}`}>{children}</body>
-    </html>
+    <main
+      className={`flex min-h-screen flex-col  ${clashDisplay.variable} ${gotham.variable} ${sora.variable}` }
+    >
+      <Head>
+        <title>OneGallon</title>
+        <meta property="og:title" content="OneGallon" key="title" />
+        <link rel="shortcut icon" href="/public/favicon.ico" />
+      </Head>
+      <NavBar />
+       <Hero />
+       <PriceEstimator />
+       <AboutUs />
+       <SaveTime /> 
+       <HIWSection />  
+       <FAQ data={data} />  
+       <ContactUs /> 
+       <Footer />
+       
+
+      
+    </main>
   )
 }

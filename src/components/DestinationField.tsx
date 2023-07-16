@@ -1,11 +1,8 @@
-"use client"
-import React,{useState  } from "react"
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React,{useState , useContext  } from "react"
+import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
 import Geocode from "react-geocode";
-
-
 
 export function DestinationField(props : {name: string , required: string }){
 
@@ -18,7 +15,7 @@ export function DestinationField(props : {name: string , required: string }){
     const showError = !isValid && !isFocused && (!isPristine || isSubmitted)
 
     const  [marker , setMarker] = React.useState({lat: 5.614818,lng: -0.205874})
-
+    
 
     const handleOpenModal = () => {
         setIsOpen(true)
@@ -42,14 +39,60 @@ export function DestinationField(props : {name: string , required: string }){
     const MapKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string
     
     Geocode.setApiKey(MapKey)
+
+    const debounce = (cb: any,delay: number) => {
+      let timer: any;
+      return function (...args: any){
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+              cb(...args)
+          } , delay)
+
+      }
+  }
+
+    const getAddress = debounce(
+       (value: string) => {
+        if(value.length > 2){ 
+          Geocode.fromAddress(value,"","", "GH").then(
+            (response) => {
+                 console.log(response)   
+                const location = response?.results[0].geometry.location  
+                setValue({address: value , lat: location.lat , lng: location.lng})
+
+            },
+            (error) => {
+             console.error(error)
+         }
+          )
+         }    
+       },2000
+    )
+    
+    const coordinatesFromAddress = (address: string) => {
+       console.log("address",address)
+       setValue({address: address})
+       getAddress(address)
+       
+      // Geocode.fromAddress(address,"","","gh").then(
+      //     (response) => {
+      //          console.log(response)     
+      //     },
+      //     (error) => {
+      //      console.error(error)
+      //  }
+      //   )
+       
+       
+    }
+
     
     const getlocation = (lat: number,lng: number) => {
-        
+              
         Geocode.fromLatLng(lat.toString(),lng.toString()).then(
             (response) => {
                 const address = response.results[0].formatted_address
-                setValue(address)
-                // console.log(address)
+                setValue({address: address , lat: lat , lng: lng})
             },
             (error) => {
                 console.error(error)
@@ -77,7 +120,8 @@ export function DestinationField(props : {name: string , required: string }){
     const center = {
         lat: 5.614818,
         lng: -0.205874
-    }  
+    } 
+    
 
     return (
       <div>
@@ -91,8 +135,8 @@ export function DestinationField(props : {name: string , required: string }){
               type="text"
               key={resetKey}
               placeholder="Enter destination"
-              value={value ?? ""}
-              onChange={(e) => setValue(e.target.value)}
+              value={value?.address ?? ""}
+              onChange={(e) => coordinatesFromAddress(e.target.value)}
               className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
               // onFocus={() => setIsFocused(true)}
               // onBlur={() => setIsFocused(false)}
@@ -132,7 +176,7 @@ export function DestinationField(props : {name: string , required: string }){
                 zoom={12}
                 options={{ streetViewControl: false }}
               >
-                <Marker 
+                <MarkerF 
                    position={marker} 
                    icon={"/pin.png"}
                    draggable={true}
@@ -142,6 +186,7 @@ export function DestinationField(props : {name: string , required: string }){
                         // console.log(e.latLng?.lng())
                         setMarker({lat: e.latLng?.lat() as number , lng: e.latLng?.lng() as number})
                         getlocation(e.latLng?.lat() as number , e.latLng?.lng() as number)
+                        
                     }
                    }
                 />

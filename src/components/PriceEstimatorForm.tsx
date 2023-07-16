@@ -1,7 +1,10 @@
-"use client"
 import React from "react"
 import {Formiz,useForm,FormizStep} from "@formiz/core"
 import {ProductField , PriceRangeField ,DestinationField,SummaryField} from './index'
+
+
+
+
 
 export function PriceEstimatorForm(){
     const Form = useForm()
@@ -15,9 +18,11 @@ export function PriceEstimatorForm(){
     
     }
 
+    // console.log("Form" , Form.values)
+
+
     const handleSteps = (step: string) => {
-      //console.log("!Form.isStepValid" , "Going to " + step +  " " + Form.isStepValid   )
-      //console.log("Form.isStepSubmitted" ,  "Going to " + step +  " " + Form.isStepSubmitted   )
+  
      ( Form.isStepValid && Form.isStepSubmitted ) ? Form.goToStep(step) : null
     }
 
@@ -43,7 +48,9 @@ export function PriceEstimatorForm(){
                 <PriceRangeField name="plan" required="please select a plan" />
             </FormizStep>
             <FormizStep name="step4">
-                <SummaryField name="summary" data={summary as {destination: string, plan: string , product: string}} />
+                {/* <SummaryField name="summary" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}} /> */}
+                <SummaryField name="summary" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}}  />
+
             </FormizStep>
             
              <div className="flex flex-wrap flex-row my-5 lg:w-5/12 w-10/12 max-w-sm mx-auto mb-5">

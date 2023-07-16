@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect } from 'react';
 
 const Modal = ({ isOpen, onClose, children }: {isOpen: boolean , onClose: () => void , children: React.ReactNode}) => {

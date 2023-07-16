@@ -1,4 +1,3 @@
-"use client"
 import react, {useState} from 'react'
 import { PortableText } from "@portabletext/react";
 import {PortableTextBlock} from '@portabletext/types'

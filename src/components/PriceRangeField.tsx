@@ -1,4 +1,3 @@
-"use client"
 import React,{useState} from "react"
 import { useField } from '@formiz/core'
 
@@ -50,21 +49,26 @@ export function PriceRangeField(props: {name: string , required: string}){
                            key={item.key}
                            htmlFor={item.key}
                            className={`label cursor-pointer border border-[#737373] rounded-lg mb-3 px-4 ${
-                             checkedValue === item.key ? "bg-black" : ""
-                           }`}
+                            checkedValue === item.key ? "bg-black" : ""
+                          }`}
                          >
+                          {/* ${
+                             checkedValue === item.key ? "bg-black" : ""
+                           } */}
                           <span
-                               className={`px-1 font-gotham font-medium label-text  ${
-                                 checkedValue === item.key ? "text-white" : ""
-                               }`}
+                               className={`px-1 font-gotham font-medium label-text ${
+                                checkedValue === item.key ? "text-white" : ""
+                              }  `}
                              >
+                              {/* ${
+                                 checkedValue === item.key ? "text-white" : ""
+                               } */}
                                {item.title}
                              </span>
                              <span
-                               className={`font-gotham font-medium label-text  ${
-                                 checkedValue === item.key ? "text-white" : ""
-                               }`}
+                               className={`font-gotham font-medium label-text ${checkedValue === item.key ? "text-white" : ""} `}
                              >
+                              {/* ${checkedValue === item.key ? "text-white" : ""} */}
                                {item.price}
                              </span>
 
@@ -78,19 +82,19 @@ export function PriceRangeField(props: {name: string , required: string}){
                              //onChange={handleChange}
                              onChange={ (e) => { handleChange(e) , setValue(e.target.value)} }
                              value={item.key}
-                             onFocus={() => setIsFocused(true)}
-                             onBlur={() => setIsFocused(false)}
+                            //  onFocus={() => setIsFocused(true)}
+                            //  onBlur={() => setIsFocused(false)}
                              key={resetKey}
                            />
                          </label>
                        );
                 })
             }
-            {
+            {/* {
               showError && (
                 <p className="font-gotham font-medium text-sm text-red-500">{errorMessage}</p>
               )
-            }
+            } */}
           
            
             
