@@ -7,14 +7,35 @@
 
 
 
-const repo = 'onegallon-landing'
-const assetPrefix = `/${repo}/`
-const basePath = `/${repo}`
+let assetPrefix = ''
+let basePath = ''
+
+let isGithubActions = process.env.ONEGALLON_ACTIONS || false
+
+let images = {
+  loader: 'default',
+  
+}
+
+if (isGithubActions) {
+  // trim off `<owner>/`
+  let repo = process.env.ONEGALLON_REPOSITORY.replace(/.*?\//, '')
+
+  assetPrefix = `/${repo}/`
+  basePath = `/${repo}`
+  
+  images['loader'] = 'imgix'
+  images['path'] = 'https://worlas.imgix.net/'
+  
+}
+
 
 const nextConfig = {
   reactStrictMode: true,
   assetPrefix: assetPrefix,
   basePath: basePath,
+  images: images,
 };
+
 
 module.exports = nextConfig
