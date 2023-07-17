@@ -21,7 +21,7 @@ if (isGithubActions) {
   // trim off `<owner>/`
   let repo = process.env.ONEGALLON_REPOSITORY.replace(/.*?\//, '')
 
-  assetPrefix = `/${repo}/`
+  assetPrefix = `/${repo}/onegallon-landing/`
   basePath = `/${repo}`
   
   images['loader'] = 'imgix'
