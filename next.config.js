@@ -6,13 +6,15 @@
 // module.exports = nextConfig
 
 
+
+const repo = 'onegallon-landing'
+const assetPrefix = `/${repo}/`
+const basePath = `/${repo}`
+
 const nextConfig = {
   reactStrictMode: true,
-  images: {
-    loader: 'akamai',
-    path: '',
-  },
-  assetPrefix: './',
+  assetPrefix: assetPrefix,
+  basePath: basePath,
 };
 
 export default nextConfig;
