@@ -22,23 +22,7 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
 
     
 
-    const data = [
-        {
-          service_plan_name: "Lite",
-          range_from: "20.00 ",
-          range_to: "25.00"
-        },
-        {
-          service_plan_name: "Regular",
-          range_from: "26.00 ",
-          range_to: "30.00"
-        },
-        {
-          service_plan_name: "Premium",
-          range_from: "31.00 ",
-          range_to: "35.00"
-        },
-    ]
+    
     const res = {
       lat: props.data.destination?.lat,
       lng: props.data.destination?.lng,
@@ -55,14 +39,30 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
       return response.json();
     };
 
-    // if(JSON.stringify(props.data) !== '{}'){
-    // }
-    
+  //   const data = [
+  //     {
+  //       service_plan_name: "Lite",
+  //       range_from: "20.00 ",
+  //       range_to: "25.00"
+  //     },
+  //     {
+  //       service_plan_name: "Regular",
+  //       range_from: "26.00 ",
+  //       range_to: "30.00"
+  //     },
+  //     {
+  //       service_plan_name: "Premium",
+  //       range_from: "31.00 ",
+  //       range_to: "35.00"
+  //     },
+  // ]
   
-    // const { data, error } = useSWR(`https://api.1gallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}`,fetcher)
+    const { data: results, error } = useSWR(`https://api.1gallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}`,fetcher)
 
-    // if (error) return <p className="font-gotham font-medium text-base mb-3 text-center">Failed to load</p>
-    // if (!data) return <p className="font-gotham font-medium text-base mb-3 text-center">Loading...</p>
+    if (error) return <p className="font-gotham font-medium text-base mb-3 text-center">Failed to load</p>
+    if (!results) return <p className="font-gotham font-medium text-base mb-3 text-center">Loading...</p>
+
+    console.log("results",results)
 
     return (
         <div className="flex flex-col">
@@ -71,7 +71,7 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
           </h2>
           <div className="form-control  mx-auto">
             {
-                data.map((item: {service_plan_name: string , range_from: string , range_to: string} ,index: number) => {
+                results?.data.map((item: {service_plan_name: string , range_from: string , range_to: string} ,index: number) => {
                        return (
                          <label
                            key={"price___range__" + index }
