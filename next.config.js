@@ -17,4 +17,4 @@ const nextConfig = {
   basePath: basePath,
 };
 
-export default nextConfig;
+module.exports = nextConfig
