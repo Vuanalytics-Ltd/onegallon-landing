@@ -24,8 +24,7 @@ if (isGithubActions) {
   assetPrefix = `/onegallon-landing/`
   basePath = `/onegallon-landing`
   
-  images['loader'] = 'imgix'
-  images['path'] = 'https://worlas.imgix.net/'
+  
   
 }
 
