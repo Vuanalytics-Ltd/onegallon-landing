@@ -14,7 +14,7 @@ export function PriceEstimatorForm(){
     const handleSubmit = (values : object) => {
         // console.log("values",values)
         setSummary(values)
-        Form.goToStep("step4")
+        Form.goToStep("step3")
     
     }
 
@@ -22,7 +22,7 @@ export function PriceEstimatorForm(){
 
 
     const handleSteps = (step: string) => {
-  
+      //Form.goToStep(step)
      ( Form.isStepValid && Form.isStepSubmitted ) ? Form.goToStep(step) : null
     }
 
@@ -45,13 +45,12 @@ export function PriceEstimatorForm(){
                 />
             </FormizStep>
             <FormizStep name="step3">
-                <PriceRangeField name="plan" required="please select a plan" />
+                <PriceRangeField name="plan" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}} />
             </FormizStep>
-            <FormizStep name="step4">
-                {/* <SummaryField name="summary" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}} /> */}
+            {/* <FormizStep name="step4">
                 <SummaryField name="summary" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}}  />
 
-            </FormizStep>
+            </FormizStep> */}
             
              <div className="flex flex-wrap flex-row my-5 lg:w-5/12 w-10/12 max-w-sm mx-auto mb-5">
                 {
@@ -68,16 +67,17 @@ export function PriceEstimatorForm(){
                 {
                     Form.currentStep?.index === 1 && (
                         <button 
-                           onClick={() => handleSteps("step3") }
-                           disabled={!Form.isStepValid && Form.isStepSubmitted}  
+                           //onClick={() => handleSteps("step3") }
+                           //disabled={!Form.isStepValid && Form.isStepSubmitted}  
+                           type="submit"
                            className="m-btn-fix btn bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Select</button>
                         )
                 }
-                {
+                {/* {
                     Form.currentStep?.index === 2 && (
                         <button type="submit"   className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Request now</button>
                         )
-                }
+                } */}
                 
                
                 

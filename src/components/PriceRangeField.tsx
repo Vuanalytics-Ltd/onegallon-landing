@@ -1,7 +1,9 @@
 import React,{useState} from "react"
 import { useField } from '@formiz/core'
+import useSWR from 'swr'
 
-export function PriceRangeField(props: {name: string , required: string}){
+
+export function PriceRangeField(props: {name: string , data: {destination: {lat: number , lng: number , address: string} , plan: string , product: string}}){
   const { setValue, value , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
     
   const [isFocused,setIsFocused] = useState(false)
@@ -18,23 +20,49 @@ export function PriceRangeField(props: {name: string , required: string}){
         
     }
 
+    
+
     const data = [
         {
-            title: "Lite",
-            price: "GHS 20.00 - GHS 25.00",
-            key: "lite"
+          service_plan_name: "Lite",
+          range_from: "20.00 ",
+          range_to: "25.00"
         },
         {
-            title: "Regular",
-            price: "GHS 26.00 - GHS 30.00",
-            key: "regular"
+          service_plan_name: "Regular",
+          range_from: "26.00 ",
+          range_to: "30.00"
         },
         {
-            title: "Premium",
-            price: "GHS 31.00 - GHS 35.00",
-            key: "premium"
+          service_plan_name: "Premium",
+          range_from: "31.00 ",
+          range_to: "35.00"
         },
     ]
+    const res = {
+      lat: props.data.destination?.lat,
+      lng: props.data.destination?.lng,
+      fuel_type: props.data.product
+    }
+
+    console.log("data",props)
+
+    const fetcher = async (url: any) => {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('An error occurred while fetching the data.');
+      }
+      return response.json();
+    };
+
+    // if(JSON.stringify(props.data) !== '{}'){
+    // }
+    
+  
+    // const { data, error } = useSWR(`https://api.1gallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}`,fetcher)
+
+    // if (error) return <p className="font-gotham font-medium text-base mb-3 text-center">Failed to load</p>
+    // if (!data) return <p className="font-gotham font-medium text-base mb-3 text-center">Loading...</p>
 
     return (
         <div className="flex flex-col">
@@ -43,45 +71,41 @@ export function PriceRangeField(props: {name: string , required: string}){
           </h2>
           <div className="form-control  mx-auto">
             {
-                data.map((item) => {
+                data.map((item: {service_plan_name: string , range_from: string , range_to: string} ,index: number) => {
                        return (
                          <label
-                           key={item.key}
-                           htmlFor={item.key}
-                           className={`label cursor-pointer border border-[#737373] rounded-lg mb-3 px-4 ${
-                            checkedValue === item.key ? "bg-black" : ""
-                          }`}
+                           key={"price___range__" + index }
+                           htmlFor={"price___range__" + index }
+                           className={`label cursor-pointer border border-[#737373] rounded-lg mb-3 px-4 hover:bg-black`}
                          >
                           {/* ${
                              checkedValue === item.key ? "bg-black" : ""
                            } */}
                           <span
-                               className={`px-1 font-gotham font-medium label-text ${
-                                checkedValue === item.key ? "text-white" : ""
-                              }  `}
+                               className={`px-1 font-gotham font-medium label-text `}
                              >
                               {/* ${
                                  checkedValue === item.key ? "text-white" : ""
                                } */}
-                               {item.title}
+                               {item.service_plan_name}
                              </span>
                              <span
-                               className={`font-gotham font-medium label-text ${checkedValue === item.key ? "text-white" : ""} `}
+                               className={`font-gotham font-medium label-text  hover:text-white`}
                              >
                               {/* ${checkedValue === item.key ? "text-white" : ""} */}
-                               {item.price}
+                               GHC {item.range_from} - GHC {item.range_to}
                              </span>
 
                            <input
-                             id={item.key}
+                             id={item.service_plan_name}
                              type="radio"
                              name="radio-10"
                              className="radio "
-                             checked={checkedValue === item.key}
+                             checked={checkedValue === item.service_plan_name}
                              hidden
                              //onChange={handleChange}
                              onChange={ (e) => { handleChange(e) , setValue(e.target.value)} }
-                             value={item.key}
+                             value={item.service_plan_name}
                             //  onFocus={() => setIsFocused(true)}
                             //  onBlur={() => setIsFocused(false)}
                              key={resetKey}
