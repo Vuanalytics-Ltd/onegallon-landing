@@ -37,7 +37,7 @@ export function NavBar (){
           <div className="">
             <Link href="/">
               <Image
-                src="/logo.svg"
+                src="./logo.svg"
                 alt="OneGallon Logo"
                 width={212}
                 height={37}
