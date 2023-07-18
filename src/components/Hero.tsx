@@ -19,7 +19,7 @@ const data = [
 
 export function Hero(){
     return (
-      <div className="hero min-h-screen bg-no-repeat place-items-start bg-[#D7D7D7] sm:bg-[url('/hero.svg')] bg-[url('/banner-mobile.png')]" >
+      <div className="hero min-h-screen bg-no-repeat place-items-start bg-[#D7D7D7] sm:bg-mobileHero bg-hero" >
         <div className="hero-content flex-col sm:mt-0 mt-40 sm:min-h-screen md:ml-8 ">
           <div className="max-w-md px-3 lg:mt-0">
             <h1 className=" lg:text-4xl text-3xl font-clashDisplay font-semibold text-white">We give you the time </h1>

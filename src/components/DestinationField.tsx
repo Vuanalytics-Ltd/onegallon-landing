@@ -178,7 +178,7 @@ export function DestinationField(props : {name: string , required: string }){
               >
                 <MarkerF 
                    position={marker} 
-                   icon={"/pin.png"}
+                   icon={"./pin.png"}
                    draggable={true}
                    onDragEnd={
                     e => {  

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from "next/link"
+import PreciousTImeImage from "../../public/precious-time.png"
 
 const data = [
     'Save time and beat the queues',
@@ -32,7 +33,7 @@ export function SaveTime(){
                 <div className="flex flex-row flex-wrap">
                     <div className="flex-auto lg:w-1/2 w-full">
                     <Image
-                        src="/precious-time.png"
+                        src={PreciousTImeImage}
                         alt="save your most precious time"
                         width={650}
                         height={500}
@@ -48,7 +49,7 @@ export function SaveTime(){
                                             <Image 
                                                 width={18}
                                                 height={18}
-                                                src="/check.svg"
+                                                src="./check.svg"
                                                 alt="check mark"
                                                     />
                                             <h2 className="font-gotham text-base font-light">{item}</h2>

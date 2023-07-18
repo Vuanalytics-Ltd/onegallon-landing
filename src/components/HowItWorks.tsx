@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import HIWImage from '../../public/how-it-works.png'
 
 const data = [
     {
@@ -127,7 +128,7 @@ export function HIWSection(){
             </div>
             <div className="flex-auto w-full lg:w-5/12">
               <Image
-                src="/how-it-works.png"
+                src={HIWImage}
                 alt="How it works"
                 width={400}
                 height={350}

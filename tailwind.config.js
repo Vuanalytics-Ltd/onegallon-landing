@@ -12,6 +12,11 @@ module.exports = {
         gotham: ['var(--font-gotham)'],
         sora: ['var(--font-sora)']
       },
+      backgroundImage: {
+         mobileHero: "url('../../public/hero.svg')",
+         hero: "url('../../public/banner-mobile.png')"
+
+      }
       // backgroundImage: {
       //   'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       //   'gradient-conic':
