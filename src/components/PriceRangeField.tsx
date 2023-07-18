@@ -3,7 +3,7 @@ import { useField } from '@formiz/core'
 import useSWR from 'swr'
 
 
-export function PriceRangeField(props: {name: string , data: {destination: {lat: number , lng: number , address: string} , plan: string , product: string}}){
+export function PriceRangeField(props: {name: string , data: {destination: {lat: number , lng: number , address: string , shouldFetch: boolean} , plan: string , product: string}}){
   const { setValue, value , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
     
   const [isFocused,setIsFocused] = useState(false)
@@ -29,7 +29,13 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
       fuel_type: props.data.product
     }
 
-    console.log("data",props)
+    // console.log("data",props)
+        console.count("results")
+
+    const isFetch = props.data.destination?.shouldFetch   
+
+
+    // console.log("isFetch",isFetch )
 
     const fetcher = async (url: any) => {
       const response = await fetch(url);
@@ -57,12 +63,15 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
   //     },
   // ]
   
-    const { data: results, error } = useSWR(`https://api.1gallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}`,fetcher)
+    const { data: results, error } = useSWR( isFetch ?  `https://api.1gallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}` : null,fetcher , {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    })
 
     if (error) return <p className="font-gotham font-medium text-base mb-3 text-center">Failed to load</p>
     if (!results) return <p className="font-gotham font-medium text-base mb-3 text-center">Loading...</p>
 
-    console.log("results",results)
 
     return (
         <div className="flex flex-col">

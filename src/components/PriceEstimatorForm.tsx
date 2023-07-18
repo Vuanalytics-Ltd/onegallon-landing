@@ -45,7 +45,7 @@ export function PriceEstimatorForm(){
                 />
             </FormizStep>
             <FormizStep name="step3">
-                <PriceRangeField name="plan" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}} />
+                <PriceRangeField name="plan" data={summary as {destination: {lat: number , lng: number , address: string, shouldFetch: boolean}, plan: string , product: string}} />
             </FormizStep>
             {/* <FormizStep name="step4">
                 <SummaryField name="summary" data={summary as {destination: {lat: number , lng: number , address: string}, plan: string , product: string}}  />

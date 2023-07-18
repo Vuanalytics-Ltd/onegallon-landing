@@ -29,9 +29,9 @@ export function DestinationField(props : {name: string , required: string }){
     
     React.useEffect(() => {
         if ("geolocation" in navigator) {
-            console.log("Available");
+            // console.log("Available");
           } else {
-            console.log("Not Available");
+            // console.log("Not Available");
           }
     },[])
     
@@ -58,7 +58,7 @@ export function DestinationField(props : {name: string , required: string }){
             (response) => {
                  console.log(response)   
                 const location = response?.results[0].geometry.location  
-                setValue({address: value , lat: location.lat , lng: location.lng})
+                setValue({address: value , lat: location.lat , lng: location.lng , shouldFetch: true})
 
             },
             (error) => {
@@ -92,7 +92,7 @@ export function DestinationField(props : {name: string , required: string }){
         Geocode.fromLatLng(lat.toString(),lng.toString()).then(
             (response) => {
                 const address = response.results[0].formatted_address
-                setValue({address: address , lat: lat , lng: lng})
+                setValue({address: address , lat: lat , lng: lng,shouldFetch: true})
             },
             (error) => {
                 console.error(error)

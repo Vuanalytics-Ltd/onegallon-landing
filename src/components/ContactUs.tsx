@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useForm , SubmitHandler } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+// import { sheetUpdate } from '@/lib/sheets';
 
 type Inputs = {
     name: string,
@@ -33,23 +34,16 @@ export function ContactUs(){
       const onSubmit: SubmitHandler<Inputs> = async (data) => {
         setLoadingState(true)
          
-        // console.log("data", data)
-
-        const contact = [data?.name , data?.email , data?.phone ,  data?.message ]
-        
         const sheetData = {
             range: 'Contacts',
-            data: contact
+            name: data?.name,
+            email: data?.email,
+            phone: data?.phone,
+            message: data?.message
         }
-        
-        const response = await fetch('/api/sheet' , {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(sheetData)
-        })
+
+
+        const response = await fetch('/api/sheet'+ '?' + new URLSearchParams(sheetData) )
 
         const content = await response.json()
 

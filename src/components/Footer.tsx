@@ -69,21 +69,15 @@ export function Footer(){
      
     // console.log("data", data)
 
-    const contact = [data?.email]
+    // const contact = [data?.email]
     
     const sheetData = {
         range: 'Mailing List',
-        data: contact
+        email: data?.email,
     }
     
-    const response = await fetch('/api/sheet' , {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(sheetData)
-    })
+    const response = await fetch('/api/sheet'+ '?' + new URLSearchParams(sheetData) )
+
 
     const content = await response.json()
 

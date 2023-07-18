@@ -14,8 +14,11 @@ export default async function createContact(req: NextApiRequest,res: NextApiResp
         return res.status(405).send({message: 'Only GET requests allowed'})
     }
 
-    // const contact = req.body as Contact
-    const contact = req.body
+
+    const contact = req.query
+
+    const data  = contact.range === 'Contacts' ? [contact.name,contact.email,contact.phone,contact.message] : [contact.email]
+    
 
     try {
 
@@ -36,18 +39,22 @@ export default async function createContact(req: NextApiRequest,res: NextApiResp
 
           const response = await sheets.spreadsheets.values.append({
             spreadsheetId: process.env.SPREADSHEET_ID,
-            range: contact?.range,
+            range: contact?.range as string,
             valueInputOption: 'USER_ENTERED',
             requestBody: {
-              values: [contact?.data],
+              values: [data],
             },
           });
 
-        //   console.log("response",response)
           return res.status(201).json({
-             data: response.data,
+            //  data: response.data,
              status: response.status
           })
+
+        //   return res.status(201).json({
+        //     data: "testing",
+        //     status: 200
+        //  })
 
     } catch (e:any) {
         // console.log("error",e)

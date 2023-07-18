@@ -73,9 +73,9 @@ export default  function Home({ data }: any) {
       className={`flex min-h-screen flex-col  ${clashDisplay.variable} ${gotham.variable} ${sora.variable}` }
     >
       <Head>
-        <title>OneGallon</title>
+        <title>OneGallon - We give you the time to do the things that matter</title>
         <meta property="og:title" content="OneGallon" key="title" />
-        <link rel="shortcut icon" href="/public/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <NavBar />
        <Hero />
