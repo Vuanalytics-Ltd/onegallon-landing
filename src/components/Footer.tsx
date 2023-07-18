@@ -77,7 +77,7 @@ export function Footer(){
     }
     
     const response = await fetch('/api/sheet' , {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
