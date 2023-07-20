@@ -9,3 +9,9 @@ export const faqQuery = groq`*[_type == "faq" ] | order(_createdAt asc) {
     answer ,
     _type 
   }`
+
+export const postQuery = groq`*[_type == "post" && publishedAt < now()]| order(publishedAt desc){
+  _id,
+  title,
+  body,
+}`  

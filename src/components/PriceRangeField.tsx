@@ -30,7 +30,7 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
     }
 
     // console.log("data",props)
-        console.count("results")
+        // console.count("results")
 
     const isFetch = props.data.destination?.shouldFetch   
 

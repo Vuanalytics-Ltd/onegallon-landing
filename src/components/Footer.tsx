@@ -178,12 +178,9 @@ export function Footer(){
                 © 2023 OneGallon - All rights reserved
               </p>
               <div className="flex gap-2">
-                <div className="">
-                  <p className="font-sora text-sm font-light">Terms</p>
-                </div>
-                <div className="">
-                  <p className="font-sora text-sm font-light">Privacy</p>
-                </div>
+                  <Link href="/privacy" className="font-sora text-sm font-light">Terms</Link>
+                
+                  <Link href="/privacy" className="font-sora text-sm font-light">Privacy</Link>
               </div>
             </div>
             <div className="flex gap-2 ">
