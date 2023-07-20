@@ -1,5 +1,5 @@
 import React,{useState , useContext  } from "react"
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, MarkerF , Autocomplete  } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
 import Geocode from "react-geocode";
@@ -15,6 +15,8 @@ export function DestinationField(props : {name: string , required: string }){
     const showError = !isValid && !isFocused && (!isPristine || isSubmitted)
 
     const  [marker , setMarker] = React.useState({lat: 5.614818,lng: -0.205874})
+
+    const [searchResult,setSearchResult] = useState<google.maps.places.Autocomplete>()
     
 
     const handleOpenModal = () => {
@@ -56,7 +58,6 @@ export function DestinationField(props : {name: string , required: string }){
         if(value.length > 2){ 
           Geocode.fromAddress(value,"","", "GH").then(
             (response) => {
-                 console.log(response)   
                 const location = response?.results[0].geometry.location  
                 setValue({address: value , lat: location.lat , lng: location.lng , shouldFetch: true})
 
@@ -70,20 +71,8 @@ export function DestinationField(props : {name: string , required: string }){
     )
     
     const coordinatesFromAddress = (address: string) => {
-       console.log("address",address)
        setValue({address: address})
        getAddress(address)
-       
-      // Geocode.fromAddress(address,"","","gh").then(
-      //     (response) => {
-      //          console.log(response)     
-      //     },
-      //     (error) => {
-      //      console.error(error)
-      //  }
-      //   )
-       
-       
     }
 
     
@@ -111,6 +100,22 @@ export function DestinationField(props : {name: string , required: string }){
         )
    }
 
+   const onLoad = (autocomplete: any) => {
+      setSearchResult(autocomplete)
+   }
+
+   const onPlacesChanged = () => {
+    if(searchResult !== null){
+      const result = searchResult?.getPlace()
+      const location = result?.geometry?.location
+      setValue({address: result?.formatted_address , lat: location?.lat() , lng: location?.lng(),shouldFetch: true})
+
+
+      // console.log("on place changed",result )
+
+    }
+  }
+
 
     const containerStyle = {
         width: '100%',
@@ -129,18 +134,27 @@ export function DestinationField(props : {name: string , required: string }){
           <h2 className="font-gotham font-medium text-base mb-3 text-center">
             Destination
           </h2>
-
+         
           <div className="form-control lg:w-5/12  w-10/12 max-w-sm mx-auto">
-            <input
+            {/* <input
               type="text"
               key={resetKey}
               placeholder="Enter destination"
               value={value?.address ?? ""}
               onChange={(e) => coordinatesFromAddress(e.target.value)}
               className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
-              // onFocus={() => setIsFocused(true)}
-              // onBlur={() => setIsFocused(false)}
-            />
+            /> */}
+             <LoadScript googleMapsApiKey={MapKey} libraries={["places"]}>
+                <Autocomplete  onLoad={onLoad} onPlaceChanged={onPlacesChanged} restrictions={{country: 'gh'}}>
+                   <input  
+                      type="text"
+                      placeholder="Enter destination"
+                      className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
+                   
+                   />
+                </Autocomplete>
+          </LoadScript>
+
             {
               showError && (
                 <p className="font-gotham font-medium text-sm text-red-500">{errorMessage}</p>

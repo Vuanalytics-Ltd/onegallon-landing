@@ -69,7 +69,7 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
       revalidateOnReconnect: false
     })
 
-    if (error) return <p className="font-gotham font-medium text-base mb-3 text-center">Failed to load</p>
+    if (error) return <p className="font-gotham font-medium text-base mb-3 text-center text-red-500">Failed to load</p>
     if (!results) return <p className="font-gotham font-medium text-base mb-3 text-center">Loading...</p>
 
 

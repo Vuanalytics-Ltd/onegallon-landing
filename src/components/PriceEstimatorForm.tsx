@@ -12,7 +12,7 @@ export function PriceEstimatorForm(){
     const [summary , setSummary] = React.useState({})
     
     const handleSubmit = (values : object) => {
-        // console.log("values",values)
+        console.log("values",values)
         setSummary(values)
         Form.goToStep("step3")
     
@@ -23,7 +23,13 @@ export function PriceEstimatorForm(){
 
     const handleSteps = (step: string) => {
       //Form.goToStep(step)
-     ( Form.isStepValid && Form.isStepSubmitted ) ? Form.goToStep(step) : null
+      // console.log("step clicked" , step);
+      // console.log("Form.isStepValid" , Form.isStepValid);
+      // console.log("Form.isStepSubmitted" , Form.isStepSubmitted);
+
+      //( Form.isStepValid && Form.isStepSubmitted )
+
+      Form.isStepValid  ? Form.goToStep(step) : null
     }
 
 
@@ -73,11 +79,13 @@ export function PriceEstimatorForm(){
                            className="m-btn-fix btn bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Select</button>
                         )
                 }
-                {/* {
+                {
                     Form.currentStep?.index === 2 && (
-                        <button type="submit"   className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full">Request now</button>
+                        <button   className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full"
+                                 onClick={() => Form.goToStep("step1")}                       
+                               >Try another location</button>
                         )
-                } */}
+                }
                 
                
                 
