@@ -72,7 +72,7 @@ export function Footer(){
     // const contact = [data?.email]
     
     const sheetData = {
-        range: 'Mailing List',
+        range: 'Mailing List!A2:D',
         email: data?.email,
     }
     

@@ -17,7 +17,7 @@ export default async function createContact(req: NextApiRequest,res: NextApiResp
 
     const contact = req.query
 
-    const data  = contact.range === 'Contacts' ? [contact.name,contact.email,contact.phone,contact.message] : [contact.email]
+    const data  = contact.range === 'Contacts!A2:D' ? [contact.name,contact.email,contact.phone,contact.message] : [contact.email]
     
 
     try {

@@ -35,7 +35,7 @@ export function ContactUs(){
         setLoadingState(true)
          
         const sheetData = {
-            range: 'Contacts',
+            range: 'Contacts!A2:D',
             name: data?.name,
             email: data?.email,
             phone: data?.phone,
