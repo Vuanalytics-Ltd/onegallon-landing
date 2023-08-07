@@ -69,25 +69,42 @@ export function Footer(){
      
     // console.log("data", data)
 
-    // const contact = [data?.email]
+    const contact = [data?.email]
     
     const sheetData = {
         range: 'Mailing List!A2:D',
-        email: data?.email,
+        data: contact,
+        type: "1gallon"
+
     }
     
-    const response = await fetch('/api/sheet'+ '?' + new URLSearchParams(sheetData) )
+    // const response = await fetch('/api/sheet'+ '?' + new URLSearchParams(sheetData) )
+    try {
+      const response = await fetch("https://google-sheet-node-api.vercel.app/api/sheet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sheetData),
+      });
 
+      const content = await response.json()
 
-    const content = await response.json()
-
-    
-    if(content?.status === 200){
+      if(content?.status === 200){
         notify()
         setLoadingState(false)
-    } else {
-        setLoadingState(true)
+      } else {
+          setLoadingState(false)
+      }
+      
+    } catch (error) {
+      setLoadingState(false)
     }
+    
+    
+
+    
+   
 
     
     

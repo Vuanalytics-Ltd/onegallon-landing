@@ -34,6 +34,7 @@ if (isGithubActions) {
 
 const nextConfig = {
   reactStrictMode: false,
+  output: "export",
   assetPrefix: assetPrefix,
   basePath: basePath,
   images: images
