@@ -66,7 +66,7 @@ export default function Layout({children}: {children: React.ReactNode}){
           <meta property="og:title" content="1Gallon" key="title" />
           <meta
           name="description"
-          content="1gallon - We give you the time to do the things that matter"
+          content="We give you the time to do the things that matter"
           key="desc"
         />
           <link rel="shortcut icon" href="/favicon.ico" />
