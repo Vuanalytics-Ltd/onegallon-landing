@@ -66,7 +66,7 @@ export default function Layout({children}: {children: React.ReactNode}){
           <meta property="og:title" content="1Gallon" key="title" />
           <meta
           name="description"
-          content="We give you the time to do the things that matter"
+          content="Request for fuel from 100+ fuel stations and in 3+ cities in Ghana, the OneGallon app is a great way to make buying fuel stress-free."
           key="desc"
         />
           <link rel="shortcut icon" href="/favicon.ico" />
