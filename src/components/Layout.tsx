@@ -61,9 +61,9 @@ export default function Layout({children}: {children: React.ReactNode}){
       >
         <Head>
           <title>
-            OneGallon - We give you the time to do the things that matter
+            1gallon - We give you the time to do the things that matter
           </title>
-          <meta property="og:title" content="OneGallon" key="title" />
+          <meta property="og:title" content="1Gallon" key="title" />
           <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
         <NavBar />
