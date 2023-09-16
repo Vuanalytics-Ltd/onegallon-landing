@@ -64,6 +64,11 @@ export default function Layout({children}: {children: React.ReactNode}){
             1gallon - We give you the time to do the things that matter
           </title>
           <meta property="og:title" content="1Gallon" key="title" />
+          <meta
+          name="description"
+          content="1gallon - We give you the time to do the things that matter"
+          key="desc"
+        />
           <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
         <NavBar />
