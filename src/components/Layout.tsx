@@ -63,9 +63,11 @@ export default function Layout({children}: {children: React.ReactNode}){
           <title>
             1gallon - We give you the time to do the things that matter
           </title>
+          <meta name="robots" content="all" />
           <meta property="og:title" content="1Gallon" key="title" />
           <meta
           name="description"
+          property="og:desc"
           content="Request for fuel from 100+ fuel stations and in 3+ cities in Ghana, the OneGallon app is a great way to make buying fuel stress-free."
           key="desc"
         />

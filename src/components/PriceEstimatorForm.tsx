@@ -81,7 +81,7 @@ export function PriceEstimatorForm(){
                 }
                 {
                     Form.currentStep?.index === 2 && (
-                        <button   className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-lg hover:bg-[#FF0127] w-full"
+                        <button   className="m-btn-fix btn  bg-[#FF0127] font-gotham font-medium normal-case text-white text-base hover:bg-[#FF0127] w-full"
                                  onClick={() => Form.goToStep("step1")}                       
                                >Try another location</button>
                         )
