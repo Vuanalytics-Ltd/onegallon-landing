@@ -61,7 +61,7 @@ export default function Layout({children}: {children: React.ReactNode}){
       >
         <Head>
           <title>
-            1gallon - We give you the time to do the things that matter
+            OneGallon - We give you the time to do the things that matter
           </title>
           {/* <meta name="robots" content="all" /> */}
           <meta property="og:title" content="1Gallon" key="title" />
