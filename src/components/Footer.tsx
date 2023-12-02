@@ -161,31 +161,35 @@ export function Footer(){
                     type="text"
                     placeholder="Email Address"
                     className="input border border-black w-80 pr-16 bg-transparent"
-                    {...register("email", { 
+                    {...register("email", {
                       required: "Email Address is required",
                       validate: {
                         // maxLength: (v) =>
                         //   v.length <= 50 || "The email should have at most 50 characters",
                         matchPattern: (v) =>
-                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-                          "Email address must be a valid address",
+                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                            v
+                          ) || "Email address must be a valid address",
                       },
                     })}
                   />
-                  
+
                   <button className="m-btn-fix  w-full   md:w-24  btn  font-sora font-semibold bg-[#FF0127] text-white normal-case hover:bg-[#FF0127]  rounded-lg">
-                  { loadingState && <span className="loading loading-spinner loading-xs"></span> }
+                    {loadingState && (
+                      <span className="loading loading-spinner loading-xs"></span>
+                    )}
                     Send
                   </button>
                 </div>
               </form>
               {errors.email && (
-                      <span
-                        role="alert"
-                        className="mt-1 font-sora text-xs font-bold text-red-500">
-                        {errors.email?.message}
-                      </span>
-                  )}
+                <span
+                  role="alert"
+                  className="mt-1 font-sora text-xs font-bold text-red-500"
+                >
+                  {errors.email?.message}
+                </span>
+              )}
               <ToastContainer />
             </div>
           </footer>
@@ -195,9 +199,11 @@ export function Footer(){
                 © 2023 OneGallon - All rights reserved
               </p>
               <div className="flex gap-2">
-                  {/* <Link href="/privacy" className="font-sora text-sm font-light">Terms</Link> */}
-                
-                  <Link href="/privacy" className="font-sora text-sm font-light">Terms & Privacy</Link>
+                {/* <Link href="/privacy" className="font-sora text-sm font-light">Terms</Link> */}
+
+                <Link href="/privacy" className="font-sora text-sm font-light">
+                  Terms & Privacy
+                </Link>
               </div>
             </div>
             <div className="flex gap-2 ">
@@ -223,7 +229,10 @@ export function Footer(){
                   />
                 </svg>
               </a>
-              <a href="https://www.instagram.com/onegallonfuel/" target="_blank">
+              <a
+                href="https://www.instagram.com/onegallonfuel/"
+                target="_blank"
+              >
                 <svg
                   width="31"
                   height="30"
@@ -241,6 +250,36 @@ export function Footer(){
                     strokeWidth="1.5"
                     strokeMiterlimit="10"
                   />
+                </svg>
+              </a>
+              <a href="https://linkedin.com/company/onegallon" target="_blank">
+                <svg
+                  height={30}
+                  viewBox="0 0 24 24"
+                  width={31}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M875 682c6.075 0 11-4.925 11-11s-4.925-11-11-11-11 4.925-11 11 4.925 11 11 11zm0-1c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm6-6h-2.431v-3.515c0-.92-.38-1.549-1.217-1.549-.64 0-.995.424-1.16.833-.063.146-.053.35-.053.555V675h-2.409s.032-6.227 0-6.793h2.409v1.066c.142-.466.912-1.132 2.14-1.132 1.524 0 2.721.978 2.721 3.082V675zm-9.705-7.643h-.016c-.776 0-1.279-.52-1.279-1.178 0-.67.518-1.179 1.31-1.179.79 0 1.277.507 1.293 1.178 0 .658-.502 1.179-1.308 1.179zm-1.018.85h2.144V675h-2.144v-6.793z"
+                    fill="#000"
+                    transform="translate(-863 -659)"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth={1}
+                  />
+                </svg>
+              </a>
+              <a href="https://twitter.com/onegallonfuel" target="_blank">
+                <svg
+                  fill="#000"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="31"
+                  height="30"
+                  viewBox="0 0 512 512"
+                  xmlSpace="preserve"
+                >
+                  <path d="M256 0C114.609 0 0 114.609 0 256c0 141.392 114.609 256 256 256 141.392 0 256-114.608 256-256C512 114.609 397.392 0 256 0zm0 472c-119.297 0-216-96.702-216-216 0-119.297 96.703-216 216-216 119.298 0 216 96.703 216 216 0 119.298-96.702 216-216 216z" />
+                  <path d="M384 170.922c-4.313 2.562-17.248 7.671-29.313 8.953 7.736-4.491 19.188-19.203 22.016-30.89-7.435 5.109-24.516 12.562-32.95 12.562 0 0 0 .023.016.039C334.141 150.75 320.608 144 305.577 144c-29.154 0-52.81 25.461-52.81 56.875 0 4.36.481 8.595 1.357 12.672h-.017c-39.562-1.094-85.811-22.446-111.874-59-16 29.852-2.156 63.046 16.015 75.141-6.203.516-17.671-.766-23.061-6.407-.375 19.797 8.484 46.048 40.735 55.563-6.221 3.61-17.19 2.579-21.984 1.781 1.687 16.75 23.437 38.623 47.202 38.623-8.47 10.534-37.373 29.706-73.141 23.596C152.298 358.782 180.625 368 210.608 368c85.205 0 151.376-74.359 147.814-166.093 0-.11-.031-.219-.031-.313 0-.25.031-.5.031-.719 0-.281-.031-.562-.031-.859 7.75-5.688 18.155-15.782 25.609-29.094z" />
                 </svg>
               </a>
             </div>
