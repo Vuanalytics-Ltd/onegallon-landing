@@ -12,7 +12,6 @@ export function PriceEstimatorForm(){
     const [summary , setSummary] = React.useState({})
     
     const handleSubmit = (values : object) => {
-        console.log("values",values)
         setSummary(values)
         Form.goToStep("step3")
     

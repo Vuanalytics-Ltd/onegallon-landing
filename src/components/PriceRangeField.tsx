@@ -63,7 +63,7 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
   //     },
   // ]
   
-    const { data: results, error } = useSWR( isFetch ?  `https://api.1gallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}` : null,fetcher , {
+    const { data: results, error } = useSWR( isFetch ?  `https://api.onegallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}` : null,fetcher , {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false
