@@ -196,7 +196,7 @@ export function Footer(){
           <div className="flex flex-row flex-wrap mt-12">
             <div className="flex gap-3 flex-1 w-full flex-wrap">
               <p className="font-sora text-sm font-light">
-                © 2023 OneGallon - All rights reserved
+                © 2024 OneGallon - All rights reserved
               </p>
               <div className="flex gap-2">
                 {/* <Link href="/privacy" className="font-sora text-sm font-light">Terms</Link> */}
