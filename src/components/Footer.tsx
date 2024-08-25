@@ -204,9 +204,6 @@ export function Footer(){
                 <Link href="/privacy" className="font-sora text-sm font-light">
                   Terms & Privacy
                 </Link>
-                <Link href="/account-deletion" className="font-sora text-sm font-light">
-                 Account Deletion
-                </Link>
               </div>
             </div>
             <div className="flex gap-2 ">
