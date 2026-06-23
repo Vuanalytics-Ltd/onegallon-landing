@@ -47,6 +47,7 @@ type Inputs = {
 }
 
 export function Footer(){
+  const currentYear = new Date().getFullYear()
 
   const {register,handleSubmit,formState,formState: {errors , isSubmitSuccessful},reset} = useForm<Inputs>()
     
@@ -196,7 +197,7 @@ export function Footer(){
           <div className="flex flex-row flex-wrap mt-12">
             <div className="flex gap-3 flex-1 w-full flex-wrap">
               <p className="font-sora text-sm font-light">
-                © 2024 OneGallon - All rights reserved
+                © {currentYear} OneGallon - All rights reserved
               </p>
               <div className="flex gap-2">
                 {/* <Link href="/privacy" className="font-sora text-sm font-light">Terms</Link> */}
