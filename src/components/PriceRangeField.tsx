@@ -23,10 +23,15 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
     
 
     
+    const FUEL_IDS: Record<string, string | undefined> = {
+      petrol: process.env.NEXT_PUBLIC_FUEL_ID_PETROL,
+      diesel: process.env.NEXT_PUBLIC_FUEL_ID_DIESEL,
+    }
+
     const res = {
       lat: props.data.destination?.lat,
       lng: props.data.destination?.lng,
-      fuel_type: props.data.product
+      fuel_id: FUEL_IDS[props.data.product]
     }
 
     // console.log("data",props)
@@ -63,7 +68,7 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
   //     },
   // ]
   
-    const { data: results, error } = useSWR( isFetch ?  `https://api.onegallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_type=${res.fuel_type}` : null,fetcher , {
+    const { data: results, error } = useSWR( isFetch && res.fuel_id ?  `https://api.onegallon.com.gh/price-estimates?lat=${res.lat}&lng=${res.lng}&radius=5&radius_unit=km&fuel_id=${res.fuel_id}` : null,fetcher , {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false
@@ -76,45 +81,39 @@ export function PriceRangeField(props: {name: string , data: {destination: {lat:
     return (
         <div className="flex flex-col">
           <h2 className="font-gotham font-medium text-base mb-3 text-center">
-            Price Range for Service plan
+            Delivery fee by plan
           </h2>
           <div className="form-control  mx-auto">
             {
-                results?.data.map((item: {service_plan_name: string , range_from: string , range_to: string} ,index: number) => {
+                results?.data.map((item: {plan_id: string , plan_name: string , available: boolean , delivery_fee: string | null , fee_basis: string | null} ,index: number) => {
                        return (
                          <label
                            key={"price___range__" + index }
-                           htmlFor={"price___range__" + index }
-                           className={`label cursor-pointer border border-[#737373] rounded-lg mb-3 px-4 hover:bg-black`}
+                           htmlFor={item.plan_id }
+                           className={`label border border-[#737373] rounded-lg mb-3 px-4 ${item.available ? "cursor-pointer hover:bg-black" : "opacity-50 cursor-not-allowed pointer-events-none"}`}
                          >
-                          {/* ${
-                             checkedValue === item.key ? "bg-black" : ""
-                           } */}
                           <span
                                className={`px-1 font-gotham font-medium label-text `}
                              >
-                              {/* ${
-                                 checkedValue === item.key ? "text-white" : ""
-                               } */}
-                               {item.service_plan_name}
+                               {item.plan_name}
                              </span>
                              <span
                                className={`font-gotham font-medium label-text  hover:text-white`}
                              >
-                              {/* ${checkedValue === item.key ? "text-white" : ""} */}
-                               GHC {item.range_from} - GHC {item.range_to}
+                               {item.available ? `GHC ${item.delivery_fee}` : "Unavailable"}
                              </span>
 
                            <input
-                             id={item.service_plan_name}
+                             id={item.plan_id}
                              type="radio"
                              name="radio-10"
                              className="radio "
-                             checked={checkedValue === item.service_plan_name}
+                             checked={checkedValue === item.plan_id}
+                             disabled={!item.available}
                              hidden
                              //onChange={handleChange}
                              onChange={ (e) => { handleChange(e) , setValue(e.target.value)} }
-                             value={item.service_plan_name}
+                             value={item.plan_id}
                             //  onFocus={() => setIsFocused(true)}
                             //  onBlur={() => setIsFocused(false)}
                              key={resetKey}
