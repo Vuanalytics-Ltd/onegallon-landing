@@ -1,8 +1,11 @@
 import React,{useState , useContext  } from "react"
-import { GoogleMap, LoadScript, MarkerF , Autocomplete  } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, MarkerF , Autocomplete  } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
 import Geocode from "react-geocode";
+
+
+const GOOGLE_MAPS_LIBRARIES: ("places")[] = ["places"]
 
 export function DestinationField(props : {name: string , required: string }){
 
@@ -39,7 +42,13 @@ export function DestinationField(props : {name: string , required: string }){
     
     
     const MapKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string
-    
+
+    const { isLoaded } = useJsApiLoader({
+      id: 'google-map-script',
+      googleMapsApiKey: MapKey,
+      libraries: GOOGLE_MAPS_LIBRARIES,
+    })
+
     Geocode.setApiKey(MapKey)
 
     const debounce = (cb: any,delay: number) => {
@@ -144,16 +153,23 @@ export function DestinationField(props : {name: string , required: string }){
               onChange={(e) => coordinatesFromAddress(e.target.value)}
               className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
             /> */}
-             <LoadScript googleMapsApiKey={MapKey} libraries={["places"]}>
+             {isLoaded ? (
                 <Autocomplete  onLoad={onLoad} onPlaceChanged={onPlacesChanged} restrictions={{country: 'gh'}}>
-                   <input  
+                   <input
                       type="text"
                       placeholder="Enter destination"
                       className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
-                   
+
                    />
                 </Autocomplete>
-          </LoadScript>
+             ) : (
+                <input
+                   type="text"
+                   placeholder="Loading..."
+                   disabled
+                   className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
+                />
+             )}
 
             {
               showError && (
@@ -183,29 +199,29 @@ export function DestinationField(props : {name: string , required: string }){
         </div>
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <div className="my-4 md:p-4 relative">
-            <LoadScript googleMapsApiKey={MapKey}>
+            {isLoaded && (
               <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom={12}
                 options={{ streetViewControl: false }}
               >
-                <MarkerF 
-                   position={marker} 
+                <MarkerF
+                   position={marker}
                    icon={"./pin.png"}
                    draggable={true}
                    onDragEnd={
-                    e => {  
+                    e => {
                         // console.log(e.latLng?.lat())
                         // console.log(e.latLng?.lng())
                         setMarker({lat: e.latLng?.lat() as number , lng: e.latLng?.lng() as number})
                         getlocation(e.latLng?.lat() as number , e.latLng?.lng() as number)
-                        
+
                     }
                    }
                 />
               </GoogleMap>
-            </LoadScript>
+            )}
             <div className="w-full md:w-10/12  p-4 rounded-md bg-white flex flex-row justify-between absolute md:left-16 md:bottom-8">
               <div className="flex flex-1 flex-wrap items-center gap-2">
                 {/* <p className="font-gotham font-medium text-base">
