@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import React, { useEffect } from "react";
 import { useForm , SubmitHandler } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 type Inputs = {

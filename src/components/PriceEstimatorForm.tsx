@@ -7,15 +7,14 @@ import {ProductField , PriceRangeField ,DestinationField,SummaryField} from './i
 
 
 export function PriceEstimatorForm(){
-    const Form = useForm()
-
     const [summary , setSummary] = React.useState({})
-    
-    const handleSubmit = (values : object) => {
-        setSummary(values)
-        Form.goToStep("step3")
-    
-    }
+
+    const Form = useForm({
+        onValidSubmit: (values : object) => {
+            setSummary(values)
+            Form.goToStep("step3")
+        }
+    })
 
     // console.log("Form" , Form.values)
 
@@ -34,7 +33,7 @@ export function PriceEstimatorForm(){
 
     return (
       <div className="w-full md:w-1/2">
-        <Formiz connect={Form} onValidSubmit={handleSubmit}>
+        <Formiz connect={Form}>
           <form noValidate onSubmit={Form.submit}>
             <FormizStep name="step1" >
                  <DestinationField 
