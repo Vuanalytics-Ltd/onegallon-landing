@@ -1,5 +1,5 @@
-import React,{useState , useContext  } from "react"
-import { GoogleMap, useJsApiLoader, MarkerF , Autocomplete  } from "@react-google-maps/api";
+import React, { useState, useRef } from "react"
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
 
@@ -10,36 +10,29 @@ export function DestinationField(props : {name: string , required: string }){
 
     const [isOpen,setIsOpen] = React.useState(false)
 
-    const { setValue, value , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
-    
+    const { setValue, value: rawValue , errorMessage , isValid , isPristine , isSubmitted , resetKey } = useField(props)
+    const value = rawValue as { address?: string; lat?: number; lng?: number; shouldFetch?: boolean } | undefined
+
     const [isFocused,setIsFocused] = useState(false)
 
     const showError = !isValid && !isFocused && (!isPristine || isSubmitted)
 
     const  [marker , setMarker] = React.useState({lat: 5.614818,lng: -0.205874})
 
-    const [searchResult,setSearchResult] = useState<google.maps.places.Autocomplete>()
-    
+    const [suggestions, setSuggestions] = useState<google.maps.places.AutocompleteSuggestion[]>([])
+    const sessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | undefined>(undefined)
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+
 
     const handleOpenModal = () => {
         setIsOpen(true)
     }
-  
+
     const handleCloseModal = () => {
         setIsOpen(false)
     }
 
-   
-    
-    React.useEffect(() => {
-        if ("geolocation" in navigator) {
-            // console.log("Available");
-          } else {
-            // console.log("Not Available");
-          }
-    },[])
-    
-    
+
     const MapKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string
 
     const { isLoaded } = useJsApiLoader({
@@ -48,42 +41,58 @@ export function DestinationField(props : {name: string , required: string }){
       libraries: GOOGLE_MAPS_LIBRARIES,
     })
 
-    const debounce = (cb: any,delay: number) => {
-      let timer: any;
-      return function (...args: any){
-          if (timer) clearTimeout(timer);
-          timer = setTimeout(() => {
-              cb(...args)
-          } , delay)
-
-      }
-  }
-
-    const getAddress = debounce(
-       (value: string) => {
-        if(value.length > 2){
-          const geocoder = new google.maps.Geocoder()
-          geocoder.geocode(
-            {address: value, componentRestrictions: {country: "gh"}},
-          ).then(
-            ({results}) => {
-                const location = results[0].geometry.location
-                setValue({address: value , lat: location.lat() , lng: location.lng() , shouldFetch: true})
-
-            },
-          ).catch((error) => {
-             console.error(error)
+    // Debounced Places (New) autocomplete lookup.
+    const fetchSuggestions = (input: string) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+      debounceRef.current = setTimeout(async () => {
+        if (input.length <= 2) {
+          setSuggestions([])
+          return
+        }
+        try {
+          if (!sessionTokenRef.current) {
+            sessionTokenRef.current = new google.maps.places.AutocompleteSessionToken()
+          }
+          const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+            input,
+            includedRegionCodes: ["gh"],
+            sessionToken: sessionTokenRef.current,
           })
-         }
-       },2000
-    )
-    
-    const coordinatesFromAddress = (address: string) => {
-       setValue({address: address})
-       getAddress(address)
+          setSuggestions(suggestions)
+        } catch (error) {
+          console.error(error)
+          setSuggestions([])
+        }
+      }, 300)
     }
 
-    
+    const handleInputChange = (text: string) => {
+      // Free text invalidates any previously resolved coordinates until a
+      // suggestion or map pin is chosen.
+      setValue({ address: text, shouldFetch: false })
+      fetchSuggestions(text)
+    }
+
+    const handleSelectSuggestion = async (suggestion: google.maps.places.AutocompleteSuggestion) => {
+      const prediction = suggestion.placePrediction
+      if (!prediction) return
+      try {
+        const place = prediction.toPlace()
+        await place.fetchFields({ fields: ["formattedAddress", "location"] })
+        setValue({
+          address: place.formattedAddress ?? prediction.text.text,
+          lat: place.location?.lat(),
+          lng: place.location?.lng(),
+          shouldFetch: true,
+        })
+      } catch (error) {
+        console.error(error)
+      }
+      setSuggestions([])
+      sessionTokenRef.current = undefined
+    }
+
+
     const getlocation = (lat: number,lng: number) => {
         const geocoder = new google.maps.Geocoder()
         geocoder.geocode({location: {lat, lng}}).then(
@@ -94,12 +103,12 @@ export function DestinationField(props : {name: string , required: string }){
         ).catch((error) => {
             console.error(error)
         })
+        setSuggestions([])
     }
 
     const handleCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             getlocation(position.coords.latitude,position.coords.longitude)
-        //    console.log(position)
         },
         (error) => {
            console.log(error)
@@ -107,33 +116,17 @@ export function DestinationField(props : {name: string , required: string }){
         )
    }
 
-   const onLoad = (autocomplete: any) => {
-      setSearchResult(autocomplete)
-   }
-
-   const onPlacesChanged = () => {
-    if(searchResult !== null){
-      const result = searchResult?.getPlace()
-      const location = result?.geometry?.location
-      setValue({address: result?.formatted_address , lat: location?.lat() , lng: location?.lng(),shouldFetch: true})
-
-
-      // console.log("on place changed",result )
-
-    }
-  }
-
 
     const containerStyle = {
         width: '100%',
         height: '500px'
       };
-    
+
     const center = {
         lat: 5.614818,
         lng: -0.205874
-    } 
-    
+    }
+
 
     return (
       <div>
@@ -141,25 +134,35 @@ export function DestinationField(props : {name: string , required: string }){
           <h2 className="font-gotham font-medium text-base mb-3 text-center">
             Destination
           </h2>
-         
+
           <div className="form-control lg:w-5/12  w-10/12 max-w-sm mx-auto">
-            {/* <input
-              type="text"
-              key={resetKey}
-              placeholder="Enter destination"
-              value={value?.address ?? ""}
-              onChange={(e) => coordinatesFromAddress(e.target.value)}
-              className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
-            /> */}
              {isLoaded ? (
-                <Autocomplete  onLoad={onLoad} onPlaceChanged={onPlacesChanged} restrictions={{country: 'gh'}}>
+                <div className="relative w-full max-w-xs mb-5">
                    <input
                       type="text"
+                      key={resetKey}
                       placeholder="Enter destination"
-                      className="bg-white input border border-[#737373] w-full max-w-xs mb-5"
-
+                      value={value?.address ?? ""}
+                      onChange={(e) => handleInputChange(e.target.value)}
+                      onFocus={() => setIsFocused(true)}
+                      onBlur={() => setIsFocused(false)}
+                      autoComplete="off"
+                      className="bg-white input border border-[#737373] w-full"
                    />
-                </Autocomplete>
+                   {suggestions.length > 0 && (
+                      <ul className="absolute z-10 w-full bg-white border border-[#737373] rounded-md mt-1 max-h-60 overflow-auto shadow-lg">
+                         {suggestions.map((suggestion, index) => (
+                            <li
+                               key={suggestion.placePrediction?.placeId ?? index}
+                               onMouseDown={() => handleSelectSuggestion(suggestion)}
+                               className="px-3 py-2 cursor-pointer hover:bg-gray-100 font-gotham text-sm text-left"
+                            >
+                               {suggestion.placePrediction?.text.text}
+                            </li>
+                         ))}
+                      </ul>
+                   )}
+                </div>
              ) : (
                 <input
                    type="text"
@@ -210,8 +213,6 @@ export function DestinationField(props : {name: string , required: string }){
                    draggable={true}
                    onDragEnd={
                     e => {
-                        // console.log(e.latLng?.lat())
-                        // console.log(e.latLng?.lng())
                         setMarker({lat: e.latLng?.lat() as number , lng: e.latLng?.lng() as number})
                         getlocation(e.latLng?.lat() as number , e.latLng?.lng() as number)
 
@@ -222,9 +223,6 @@ export function DestinationField(props : {name: string , required: string }){
             )}
             <div className="w-full md:w-10/12  p-4 rounded-md bg-white flex flex-row justify-between absolute md:left-16 md:bottom-8">
               <div className="flex flex-1 flex-wrap items-center gap-2">
-                {/* <p className="font-gotham font-medium text-base">
-                  Use current location
-                </p> */}
                 <p className="font-gotham font-medium text-sm text-[#898989]">
                   Please drag pin to select location
                 </p>
@@ -235,7 +233,7 @@ export function DestinationField(props : {name: string , required: string }){
             </div>
           </div>
         </Modal>
-        
+
       </div>
     );
 }

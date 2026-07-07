@@ -19,15 +19,16 @@ export function PriceEstimatorForm(){
     // console.log("Form" , Form.values)
 
 
+    const stepOrder = ["step1", "step2", "step3"]
+
     const handleSteps = (step: string) => {
-      //Form.goToStep(step)
-      // console.log("step clicked" , step);
-      // console.log("Form.isStepValid" , Form.isStepValid);
-      // console.log("Form.isStepSubmitted" , Form.isStepSubmitted);
-
-      //( Form.isStepValid && Form.isStepSubmitted )
-
-      Form.isStepValid  ? Form.goToStep(step) : null
+      const currentIndex = Form.currentStep?.index ?? 0
+      const targetIndex = stepOrder.indexOf(step)
+      // Always allow going back to a previous/current step; only allow
+      // advancing when the current step is valid.
+      if (targetIndex <= currentIndex || Form.isStepValid) {
+        Form.goToStep(step)
+      }
     }
 
 
