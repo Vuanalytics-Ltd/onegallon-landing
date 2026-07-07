@@ -2,7 +2,7 @@ import React,{useState , useContext  } from "react"
 import { GoogleMap, useJsApiLoader, MarkerF , Autocomplete  } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
-import Geocode from "react-geocode";
+import { setKey, fromAddress, fromLatLng } from "react-geocode";
 
 
 const GOOGLE_MAPS_LIBRARIES: ("places")[] = ["places"]
@@ -49,7 +49,7 @@ export function DestinationField(props : {name: string , required: string }){
       libraries: GOOGLE_MAPS_LIBRARIES,
     })
 
-    Geocode.setApiKey(MapKey)
+    setKey(MapKey)
 
     const debounce = (cb: any,delay: number) => {
       let timer: any;
@@ -65,7 +65,7 @@ export function DestinationField(props : {name: string , required: string }){
     const getAddress = debounce(
        (value: string) => {
         if(value.length > 2){ 
-          Geocode.fromAddress(value,"","", "GH").then(
+          fromAddress(value, MapKey, undefined, "GH").then(
             (response) => {
                 const location = response?.results[0].geometry.location  
                 setValue({address: value , lat: location.lat , lng: location.lng , shouldFetch: true})
@@ -87,7 +87,7 @@ export function DestinationField(props : {name: string , required: string }){
     
     const getlocation = (lat: number,lng: number) => {
               
-        Geocode.fromLatLng(lat.toString(),lng.toString()).then(
+        fromLatLng(lat, lng).then(
             (response) => {
                 const address = response.results[0].formatted_address
                 setValue({address: address , lat: lat , lng: lng,shouldFetch: true})
