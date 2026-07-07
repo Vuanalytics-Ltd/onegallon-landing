@@ -2,7 +2,6 @@ import React,{useState , useContext  } from "react"
 import { GoogleMap, useJsApiLoader, MarkerF , Autocomplete  } from "@react-google-maps/api";
 import { useField } from '@formiz/core'
 import Modal from './Modal'
-import { setKey, fromAddress, fromLatLng } from "react-geocode";
 
 
 const GOOGLE_MAPS_LIBRARIES: ("places")[] = ["places"]
@@ -49,8 +48,6 @@ export function DestinationField(props : {name: string , required: string }){
       libraries: GOOGLE_MAPS_LIBRARIES,
     })
 
-    setKey(MapKey)
-
     const debounce = (cb: any,delay: number) => {
       let timer: any;
       return function (...args: any){
@@ -64,18 +61,20 @@ export function DestinationField(props : {name: string , required: string }){
 
     const getAddress = debounce(
        (value: string) => {
-        if(value.length > 2){ 
-          fromAddress(value, MapKey, undefined, "GH").then(
-            (response) => {
-                const location = response?.results[0].geometry.location  
-                setValue({address: value , lat: location.lat , lng: location.lng , shouldFetch: true})
+        if(value.length > 2){
+          const geocoder = new google.maps.Geocoder()
+          geocoder.geocode(
+            {address: value, componentRestrictions: {country: "gh"}},
+          ).then(
+            ({results}) => {
+                const location = results[0].geometry.location
+                setValue({address: value , lat: location.lat() , lng: location.lng() , shouldFetch: true})
 
             },
-            (error) => {
+          ).catch((error) => {
              console.error(error)
+          })
          }
-          )
-         }    
        },2000
     )
     
@@ -86,16 +85,15 @@ export function DestinationField(props : {name: string , required: string }){
 
     
     const getlocation = (lat: number,lng: number) => {
-              
-        fromLatLng(lat, lng).then(
-            (response) => {
-                const address = response.results[0].formatted_address
+        const geocoder = new google.maps.Geocoder()
+        geocoder.geocode({location: {lat, lng}}).then(
+            ({results}) => {
+                const address = results[0].formatted_address
                 setValue({address: address , lat: lat , lng: lng,shouldFetch: true})
             },
-            (error) => {
-                console.error(error)
-            }
-        )
+        ).catch((error) => {
+            console.error(error)
+        })
     }
 
     const handleCurrentLocation = () => {

@@ -25,7 +25,6 @@
     "postcss": "8.4.24",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-geocode": "^2.0.1",
     "react-hook-form": "^7.81.0",
     "react-toastify": "^11.1.0",
     "sanity": "^6.3.0",
